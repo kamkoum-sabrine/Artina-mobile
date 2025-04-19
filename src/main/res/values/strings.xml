@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Artina</string>
+    <string-array name="cinemas">
+        <item>Pathé Tunis City</item>
+        <item>Le Colisée</item>
+        <item>CinéMadart</item>
+        <item>ABC</item>
+    </string-array>
+</resources>
