@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Artina"
-        android:textSize="36sp"
-        android:textColor="#FFFFFF"
         android:layout_centerInParent="true"
-        android:fontFamily="sans-serif-medium" />
+        android:fontFamily="sans-serif-medium"
+        android:text="Artina"
+        android:textColor="#E50914"
+        android:textSize="45sp"
+        tools:fontFamily="@font/adlam_display" />-->
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="262dp"
+        android:layout_height="226dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/artina" />
+
 </RelativeLayout>

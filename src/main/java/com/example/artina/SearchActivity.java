@@ -4,29 +4,31 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.artina.databinding.ActivitySearchBinding;
 
-    Spinner spinnerCinema;
+public class SearchActivity extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivitySearchBinding binding;
 
     private void setupBottomNavBar(String currentPage) {
         LinearLayout navHome = findViewById(R.id.nav_home);
         LinearLayout navSearch = findViewById(R.id.nav_search);
         LinearLayout navReservation = findViewById(R.id.nav_reservation);
+
 
         ImageView iconHome = findViewById(R.id.icon_home);
         ImageView iconSearch = findViewById(R.id.icon_search);
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         iconHome.setColorFilter(currentPage.equals("home") ? activeColor : inactiveColor);
         iconSearch.setColorFilter(currentPage.equals("search") ? activeColor : inactiveColor);
         iconReservation.setColorFilter(currentPage.equals("reservation") ? activeColor : inactiveColor);
+
 
         // Redirections
         navHome.setOnClickListener(v -> {
@@ -65,23 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        spinnerCinema = findViewById(R.id.spinnerCinema);
+        setContentView(R.layout.activity_search);
+        setupBottomNavBar("search"); // ou "search", "reservation", "account" selon l'activity
 
-        // Définir les options du Spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.cinemas,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCinema.setAdapter(adapter);
-        setupBottomNavBar("home"); // ou "search", "reservation", "account" selon l'activity
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_search);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 }

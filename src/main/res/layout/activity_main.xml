@@ -1,152 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="#000000"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#000000"
+    android:orientation="vertical">
 
-    <!-- Affiche principale -->
-    <RelativeLayout
+    <!-- Zone scrollable : tout le contenu de la page -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp">
-
-        <ImageView
-            android:id="@+id/bannerImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sinners" />
-
-        <!-- Titre -->
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SINNERS"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="#FFFF00"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="280dp"
-            android:fontFamily="sans-serif-condensed" />
-
-        <!-- Bouton Réserver -->
-        <Button
-            android:id="@+id/btnReserve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Réserver maintenant"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            android:backgroundTint="#FFD000"
-            android:layout_below="@id/titleText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
-    </RelativeLayout>
-
-    <!-- Sélecteur de cinéma -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Où ?"
-            android:background="#FFD000"
-            android:textStyle="bold"
-            android:padding="6dp"
-            android:textColor="#000000" />
-
-        <Spinner
-            android:id="@+id/spinnerCinema"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:padding="10dp"
-            android:entries="@array/cinemas" />
-    </LinearLayout>
-
-    <!-- À l'affiche -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="À l'affiche au cinéma"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
-        android:textStyle="bold" />
-
-    <!-- Carousel des films -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:scrollbars="none">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/film1"
-                android:scaleType="centerCrop"
-                android:layout_marginEnd="10dp" />
+            <!-- Affiche principale -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/film2"
-                android:scaleType="centerCrop"
-                android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/bannerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sinners" />
+
+                <!-- Titre -->
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:textColor="#e50914"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="280dp"
+                    android:fontFamily="sans-serif-condensed" />
+
+                <!-- Bouton Réserver -->
+                <Button
+                    android:id="@+id/btnReserve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Réserver maintenant"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#e50914"
+                    android:layout_below="@id/titleText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp" />
+            </RelativeLayout>
+
+            <!-- Sélecteur de cinéma -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Où ?"
+                    android:background="#e50914"
+                    android:textStyle="bold"
+                    android:padding="6dp"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/spinnerCinema"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:padding="10dp"
+                    android:entries="@array/cinemas" />
+            </LinearLayout>
+
+            <!-- À l'affiche -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="À l'affiche au cinéma"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:textStyle="bold" />
+
+            <!-- Carousel des films -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/film1"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/film2"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/film2"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/film2"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/film2"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+            <!-- Section : Prochaines sorties -->
+            <TextView
+                android:id="@+id/prochaines_sorties_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prochaines sorties"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:scrollbars="none">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <!-- Exemple de spectacle à venir -->
+
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/prochaine1" />
+
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/prochaine2" />
+
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/prochaine1" />
+
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/prochaine2" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="© Artina 2025 - Tous droits réservés"
+                android:textColor="#AAAAAA"
+                android:textAlignment="center"
+                android:padding="16dp"
+                android:textSize="12sp"
+                android:background="#111111" />
 
         </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- Barre de navigation (simple) -->
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#1A1A1A">
+        android:background="#1A1A1A"
+        android:weightSum="3"
+        android:paddingHorizontal="12dp">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_home"
-            android:tint="#FFFFFF"
-            android:layout_margin="8dp" />
+        <!-- Accueil -->
+        <LinearLayout
+            android:id="@+id/nav_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_cinema"
-            android:tint="#FFFFFF"
-            android:layout_margin="8dp" />
+            <ImageView
+                android:id="@+id/icon_home"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_home"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_wallet"
-            android:tint="#FFFFFF"
-            android:layout_margin="8dp" />
+        <!-- Recherche -->
+        <LinearLayout
+            android:id="@+id/nav_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_user"
-            android:tint="#FFFFFF"
-            android:layout_margin="8dp" />
+            <ImageView
+                android:id="@+id/icon_search"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_search"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- Compte -->
+        <LinearLayout
+            android:id="@+id/nav_reservation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon_reservation"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_reservation"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

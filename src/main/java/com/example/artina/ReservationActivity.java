@@ -3,6 +3,8 @@ package com.example.artina;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,19 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
-
-    Spinner spinnerCinema;
-
+public class ReservationActivity extends AppCompatActivity {
     private void setupBottomNavBar(String currentPage) {
         LinearLayout navHome = findViewById(R.id.nav_home);
         LinearLayout navSearch = findViewById(R.id.nav_search);
@@ -65,23 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+       // EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_reservation);
 
-        spinnerCinema = findViewById(R.id.spinnerCinema);
+        setupBottomNavBar("reservation"); // ou "search", "reservation", "account" selon l'activity
 
-        // Définir les options du Spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.cinemas,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCinema.setAdapter(adapter);
-        setupBottomNavBar("home"); // ou "search", "reservation", "account" selon l'activity
 
     }
 }

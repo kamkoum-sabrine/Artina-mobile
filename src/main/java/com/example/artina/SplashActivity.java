@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,14 +27,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        TextView logoText = findViewById(R.id.appName);
-
+      //  TextView logoText = findViewById(R.id.appName);
+        ImageView logoImage = findViewById(R.id.appLogo);
         // Animation clignotante (fade in/out)
         AlphaAnimation blink = new AlphaAnimation(0.3f, 1.0f);
         blink.setDuration(1000);
         blink.setRepeatMode(AlphaAnimation.REVERSE);
         blink.setRepeatCount(AlphaAnimation.INFINITE);
-        logoText.startAnimation(blink);
+        logoImage.startAnimation(blink);
 
         // Aller à l'activité principale après 3 secondes
         new Handler().postDelayed(() -> {
