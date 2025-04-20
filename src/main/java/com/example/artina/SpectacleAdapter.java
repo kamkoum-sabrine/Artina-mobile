@@ -14,28 +14,32 @@ import com.example.artina.Spectacle;
 
 import java.util.List;
 
-public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.SpectacleViewHolder> {
+public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.ViewHolder> {
 
     private List<Spectacle> spectacleList;
+    private OnSpectacleClickListener listener;
 
-    public SpectacleAdapter(List<Spectacle> spectacleList) {
+    public interface OnSpectacleClickListener {
+        void onSpectacleClick(Spectacle spectacle);
+    }
+
+    public SpectacleAdapter(List<Spectacle> spectacleList, OnSpectacleClickListener listener) {
         this.spectacleList = spectacleList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public SpectacleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_spectacle, parent, false);
-        return new SpectacleViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SpectacleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Spectacle spectacle = spectacleList.get(position);
-        holder.titre.setText(spectacle.getTitre());
-        holder.description.setText(spectacle.getDescription());
-        holder.image.setImageResource(spectacle.getImageResource());
+        holder.bind(spectacle, listener);
     }
 
     @Override
@@ -43,15 +47,24 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
         return spectacleList.size();
     }
 
-    public static class SpectacleViewHolder extends RecyclerView.ViewHolder {
-        TextView titre, description;
-        ImageView image;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageSpectacle;
+        TextView titreSpectacle;
+        TextView descriptionSpectacle;
 
-        public SpectacleViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            titre = itemView.findViewById(R.id.titreSpectacle);
-            description = itemView.findViewById(R.id.descriptionSpectacle);
-            image = itemView.findViewById(R.id.imageSpectacle);
+            imageSpectacle = itemView.findViewById(R.id.imageSpectacle);
+            titreSpectacle = itemView.findViewById(R.id.titreSpectacle);
+            descriptionSpectacle = itemView.findViewById(R.id.descriptionSpectacle);
+        }
+
+        public void bind(Spectacle spectacle, OnSpectacleClickListener listener) {
+            imageSpectacle.setImageResource(spectacle.getImageResource());
+            titreSpectacle.setText(spectacle.getTitre());
+            descriptionSpectacle.setText(spectacle.getDescription());
+
+            itemView.setOnClickListener(v -> listener.onSpectacleClick(spectacle));
         }
     }
 }

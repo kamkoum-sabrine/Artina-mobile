@@ -1,5 +1,6 @@
 package com.example.artina;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,15 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
         spectacleList.add(new Spectacle("Piège", "Thriller psychologique", R.drawable.prochaine2));
         spectacleList.add(new Spectacle("Piège", "Thriller psychologique", R.drawable.prochaine2));
 
-        adapter = new SpectacleAdapter(spectacleList);
+      //  adapter = new SpectacleAdapter(spectacleList);
+        adapter = new SpectacleAdapter(spectacleList, spectacle -> {
+            Intent intent = new Intent(ListeSpectaclesActivity.this, DetailSpectacleActivity.class);
+            intent.putExtra("titre", spectacle.getTitre());
+            intent.putExtra("description", spectacle.getDescription());
+            intent.putExtra("image", spectacle.getImageResource());
+            startActivity(intent);
+        });
+
         recyclerView.setAdapter(adapter);
     }
 }
