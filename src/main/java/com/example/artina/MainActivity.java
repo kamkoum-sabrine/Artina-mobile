@@ -12,7 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinnerCinema;
+    Button btnVoirTousSpectacles;
 
     private void setupBottomNavBar(String currentPage) {
         LinearLayout navHome = findViewById(R.id.nav_home);
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         spinnerCinema = findViewById(R.id.spinnerCinema);
-
+        btnVoirTousSpectacles = findViewById(R.id.btnVoirTousSpectacles);
         // Définir les options du Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -83,5 +86,12 @@ public class MainActivity extends AppCompatActivity {
         spinnerCinema.setAdapter(adapter);
         setupBottomNavBar("home"); // ou "search", "reservation", "account" selon l'activity
 
+        btnVoirTousSpectacles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListeSpectaclesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

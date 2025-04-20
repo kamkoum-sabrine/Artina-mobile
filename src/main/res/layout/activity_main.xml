@@ -71,20 +71,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Où ?"
                     android:background="#e50914"
-                    android:textStyle="bold"
                     android:padding="6dp"
-                    android:textColor="#FFFFFF" />
+                    android:text="Où ?"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerCinema"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@android:drawable/btn_dropdown"
-                    android:padding="10dp"
-                    android:entries="@array/cinemas" />
+                    android:entries="@array/cinemas"
+                    android:padding="10dp" />
             </LinearLayout>
 
             <!-- À l'affiche -->
@@ -147,6 +147,17 @@
 
                 </LinearLayout>
             </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/btnVoirTousSpectacles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#504B4B"
+                android:text="Voir tous les spectacles"
+                android:textColor="@android:color/white" />
+
             <!-- Section : Prochaines sorties -->
             <TextView
                 android:id="@+id/prochaines_sorties_title"
