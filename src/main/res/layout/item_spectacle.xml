@@ -1,25 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="8dp"
     android:padding="8dp"
-    android:background="@drawable/spectacle_card_background">
+    android:background="@drawable/spectacle_card_background"
+    android:elevation="4dp">
 
     <ImageView
         android:id="@+id/imageSpectacle"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="description" />
 
     <TextView
         android:id="@+id/titreSpectacle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/dateSpectacle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#BBBBBB"
+        android:textSize="14sp"
+        android:paddingTop="4dp" />
 
     <TextView
         android:id="@+id/descriptionSpectacle"

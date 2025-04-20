@@ -1,21 +1,19 @@
 package com.example.artina;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.artina.R;
-import com.example.artina.Spectacle;
-
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.ViewHolder> {
 
+    private Context context;
     private List<Spectacle> spectacleList;
     private OnSpectacleClickListener listener;
 
@@ -23,7 +21,8 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
         void onSpectacleClick(Spectacle spectacle);
     }
 
-    public SpectacleAdapter(List<Spectacle> spectacleList, OnSpectacleClickListener listener) {
+    public SpectacleAdapter(Context context, List<Spectacle> spectacleList, OnSpectacleClickListener listener) {
+        this.context = context;
         this.spectacleList = spectacleList;
         this.listener = listener;
     }
@@ -31,7 +30,7 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_spectacle, parent, false);
         return new ViewHolder(view);
     }
@@ -51,18 +50,30 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
         ImageView imageSpectacle;
         TextView titreSpectacle;
         TextView descriptionSpectacle;
+        TextView dateSpectacle; // Nouveau champ pour la date
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageSpectacle = itemView.findViewById(R.id.imageSpectacle);
             titreSpectacle = itemView.findViewById(R.id.titreSpectacle);
             descriptionSpectacle = itemView.findViewById(R.id.descriptionSpectacle);
+            dateSpectacle = itemView.findViewById(R.id.dateSpectacle); // Initialisation du champ date
         }
 
         public void bind(Spectacle spectacle, OnSpectacleClickListener listener) {
-            imageSpectacle.setImageResource(spectacle.getImageResource());
+            // Chargement de l'image avec Picasso
+            if (spectacle.getImagePath() != null && !spectacle.getImagePath().isEmpty()) {
+                String imageUrl = "http://localhost:8081/api/images/" + spectacle.getImagePath();
+                Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.artina)
+                        .error(R.drawable.artina)
+                        .into(imageSpectacle);
+            }
+
             titreSpectacle.setText(spectacle.getTitre());
             descriptionSpectacle.setText(spectacle.getDescription());
+            dateSpectacle.setText(spectacle.getDate()); // Affichage de la date
 
             itemView.setOnClickListener(v -> listener.onSpectacleClick(spectacle));
         }
