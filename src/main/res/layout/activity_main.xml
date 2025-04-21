@@ -51,17 +51,17 @@
                     android:id="@+id/btnReserve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Réserver maintenant"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#e50914"
                     android:layout_below="@id/titleText"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#e50914"
+                    android:text="Réserver maintenant"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF" />
             </RelativeLayout>
 
-            <!-- Sélecteur de cinéma -->
-            <LinearLayout
+            <!-- Sélecteur de lieu -->
+         <!--   <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
@@ -85,7 +85,7 @@
                     android:background="@android:drawable/btn_dropdown"
                     android:entries="@array/cinemas"
                     android:padding="10dp" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <!-- À l'affiche -->
             <TextView

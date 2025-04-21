@@ -41,6 +41,7 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
             intent.putExtra("TITRE", spectacle.getTitre());
          //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
             intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
+
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);

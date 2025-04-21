@@ -1,6 +1,7 @@
 package com.example.artina;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -63,16 +66,33 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
         public void bind(Spectacle spectacle, OnSpectacleClickListener listener) {
             // Chargement de l'image avec Picasso
             if (spectacle.getImagePath() != null && !spectacle.getImagePath().isEmpty()) {
-                String imageUrl = "http://localhost:8081/api/images/" + spectacle.getImagePath();
+                String imageUrl = "http://192.168.1.187:8081/api/images/" + spectacle.getImagePath();
+
+//                String imageUrl = "http://localhost:8081/api/images/spectacles/" + spectacle.getImagePath();
+            /**    Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.artina)
+                        .error(R.drawable.artina)
+                        .into(imageSpectacle);**/
                 Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.artina)
                         .error(R.drawable.artina)
-                        .into(imageSpectacle);
+                        .into(imageSpectacle, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d("Picasso", "Image loaded successfully: " + imageUrl);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso", "Error loading image: " + imageUrl, e);
+                            }
+                        });
             }
 
             titreSpectacle.setText(spectacle.getTitre());
-            descriptionSpectacle.setText(spectacle.getDescription());
+          //  descriptionSpectacle.setText(spectacle.getDescription());
             dateSpectacle.setText(spectacle.getDate()); // Affichage de la date
 
             itemView.setOnClickListener(v -> listener.onSpectacleClick(spectacle));

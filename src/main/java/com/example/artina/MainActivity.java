@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinnerCinema = findViewById(R.id.spinnerCinema);
+        //spinnerCinema = findViewById(R.id.spinnerCinema);
         btnVoirTousSpectacles = findViewById(R.id.btnVoirTousSpectacles);
         // Définir les options du Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCinema.setAdapter(adapter);
+        //spinnerCinema.setAdapter(adapter);
         setupBottomNavBar("home"); // ou "search", "reservation", "account" selon l'activity
 
         btnVoirTousSpectacles.setOnClickListener(new View.OnClickListener() {

@@ -10,7 +10,7 @@
         android:id="@+id/titrePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Actuellement au cinéma"
+        android:text="Actuellement au spectacle"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
