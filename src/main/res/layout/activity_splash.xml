@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!--<TextView
+   <!-- <TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,8 +13,8 @@
         android:fontFamily="sans-serif-medium"
         android:text="Artina"
         android:textColor="#E50914"
-        android:textSize="45sp"
-        tools:fontFamily="@font/adlam_display" />-->
+        android:textSize="70sp"
+        tools:fontFamily="@font/arizonia" />-->
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="262dp"

@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sinners" />
+                    android:src="@drawable/prochaine2" />
 
                 <!-- Titre -->
                 <TextView
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#504B4B"
+                android:backgroundTint="#e50914"
                 android:text="Voir tous les spectacles"
                 android:textColor="@android:color/white" />
 

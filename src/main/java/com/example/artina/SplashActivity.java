@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-      //  TextView logoText = findViewById(R.id.appName);
+      // TextView logoText = findViewById(R.id.appName);
         ImageView logoImage = findViewById(R.id.appLogo);
         // Animation clignotante (fade in/out)
         AlphaAnimation blink = new AlphaAnimation(0.3f, 1.0f);
@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         blink.setRepeatMode(AlphaAnimation.REVERSE);
         blink.setRepeatCount(AlphaAnimation.INFINITE);
         logoImage.startAnimation(blink);
-
+      //  logoText.startAnimation(blink);
         // Aller à l'activité principale après 3 secondes
         new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
