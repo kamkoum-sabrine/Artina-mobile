@@ -42,10 +42,13 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
             intent.putExtra("TITRE", spectacle.getTitre());
 
             intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
+            intent.putExtra("ID", spectacle.getId());
+
             intent.putExtra("DATES", spectacle.getDate());
             intent.putExtra("SPECTACLE", spectacle);
          //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
             intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
+
 
             startActivity(intent);
         });
