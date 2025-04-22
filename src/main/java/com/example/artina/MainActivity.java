@@ -161,13 +161,31 @@ public class MainActivity extends AppCompatActivity {
 
             // Gestion du clic
             imageView.setOnClickListener(v -> {
-                int position = (int) v.getTag();
-                Spectacle selectedSpectacle = spectacleList.get(position);
-                openSpectacleDetail(selectedSpectacle);
+               // int position = (int) v.getTag();
+                //Spectacle selectedSpectacle = spectacleList.get(position);
+                //openSpectacleDetail(selectedSpectacle);
+                Intent intent = new Intent(MainActivity.this, DetailSpectacleActivity.class);
+                intent.putExtra("SPECTACLE_ID", spectacle.getId());
+                intent.putExtra("TITRE", spectacle.getTitre());
+
+                intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
+                intent.putExtra("ID", spectacle.getId());
+
+                intent.putExtra("DATES", spectacle.getDate());
+                intent.putExtra("LIEU", spectacle.getIdLieu().getNom());
+                intent.putExtra("ADRESSE", spectacle.getIdLieu().getAdresse());
+                intent.putExtra("VILLE", spectacle.getIdLieu().getVille());
+
+                intent.putExtra("SPECTACLE", spectacle);
+                //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
+                intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
+
+
+                startActivity(intent);
             });
 
-            if (spectacle.getImagePath() != null && !spectacle.getImagePath().isEmpty()) {
-                String imageUrl = "http://192.168.1.187:8081/api/images/" + spectacle.getImagePath();
+            if (spectacle.getImagePath() != null && !spectacle.getImagePathVertical().isEmpty()) {
+                String imageUrl = "http://192.168.1.187:8081/api/images/" + spectacle.getImagePathVertical();
                 Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.artina)

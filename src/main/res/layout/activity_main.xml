@@ -150,7 +150,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="À l'affiche au cinéma"
+                android:text="Les spectacles"
                 android:textSize="18sp"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"

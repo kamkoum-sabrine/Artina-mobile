@@ -23,12 +23,33 @@ public class Spectacle implements Parcelable {
     @SerializedName("imagePath")
     private String imagePath;
 
+    @SerializedName("imagePathVertical")
+    private String imagePathVertical;
+
+    public String getImagePathVertical() {
+        return imagePathVertical;
+    }
+
+    public void setImagePathVertical(String imagePathVertical) {
+        this.imagePathVertical = imagePathVertical;
+    }
+
     private Lieu idLieu;
 
     public static class Lieu implements Parcelable {
         private Long id;
         private String nom;
         private String adresse;
+
+        private String ville;
+
+        public String getVille() {
+            return ville;
+        }
+
+        public void setVille(String ville) {
+            this.ville = ville;
+        }
 
         public String getNom() {
             return nom;

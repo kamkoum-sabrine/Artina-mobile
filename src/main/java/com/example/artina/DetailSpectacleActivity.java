@@ -44,6 +44,10 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         imageView = findViewById(R.id.detail_image);
         titreText = findViewById(R.id.detail_titre);
+
+        TextView lieuNom = findViewById(R.id.lieuNom);
+        TextView lieuAdresse = findViewById(R.id.lieuAdresse);
+        TextView lieuVille = findViewById(R.id.lieuVille);
         TextView dateHeureSpectacle = findViewById(R.id.dateHeureSpectacleDetail);
         Intent intent = getIntent();
 
@@ -52,11 +56,18 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         String titre = intent.getStringExtra("TITRE");
         String description = intent.getStringExtra("DESCRIPTION"); // active si tu veux
         String imagePath = intent.getStringExtra("IMAGE_PATH");
+        String lieu = intent.getStringExtra("LIEU");
+        String ville = intent.getStringExtra("VILLE");
+        String adresse = intent.getStringExtra("ADRESSE");
+
         Double hdebut = getIntent().getDoubleExtra("HEURE_DEBUT", 0.0); // 0.0 est la valeur par défaut
         String dates = intent.getStringExtra("DATES");
         Long idSpec = getIntent().getLongExtra("ID", 0); // 0.0 est la valeur par défaut
 
         titreText.setText(titre);
+        lieuNom.setText(lieu);
+        lieuAdresse.setText(adresse);
+        lieuVille.setText(ville);
 
        try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

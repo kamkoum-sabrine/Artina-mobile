@@ -43,7 +43,9 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
 
             intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
             intent.putExtra("ID", spectacle.getId());
-
+            intent.putExtra("LIEU", spectacle.getIdLieu().getNom());
+            intent.putExtra("ADRESSE", spectacle.getIdLieu().getAdresse());
+            intent.putExtra("VILLE", spectacle.getIdLieu().getVille());
             intent.putExtra("DATES", spectacle.getDate());
             intent.putExtra("SPECTACLE", spectacle);
          //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
