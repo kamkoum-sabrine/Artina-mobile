@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.ViewHolder> {
 
@@ -53,14 +57,20 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
         ImageView imageSpectacle;
         TextView titreSpectacle;
         TextView descriptionSpectacle;
-        TextView dateSpectacle; // Nouveau champ pour la date
+        TextView dateHeureSpectacle;
+
+        TextView hdebutSpectacle;
+
+        TextView lieuSpectacle;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageSpectacle = itemView.findViewById(R.id.imageSpectacle);
             titreSpectacle = itemView.findViewById(R.id.titreSpectacle);
-            descriptionSpectacle = itemView.findViewById(R.id.descriptionSpectacle);
-            dateSpectacle = itemView.findViewById(R.id.dateSpectacle); // Initialisation du champ date
+         //   descriptionSpectacle = itemView.findViewById(R.id.descriptionSpectacle);
+            dateHeureSpectacle = itemView.findViewById(R.id.dateHeureSpectacle);
+          //  hdebutSpectacle = itemView.findViewById(R.id.hdebutSpectacle);
+            lieuSpectacle = itemView.findViewById(R.id.lieuSpectacle); // Ajouté
         }
 
         public void bind(Spectacle spectacle, OnSpectacleClickListener listener) {
@@ -91,11 +101,44 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
                         });
             }
 
-            titreSpectacle.setText(spectacle.getTitre());
+            //   titreSpectacle.setText(spectacle.getTitre());
           //  descriptionSpectacle.setText(spectacle.getDescription());
-            dateSpectacle.setText(spectacle.getDate()); // Affichage de la date
+          //  dateSpectacle.setText(spectacle.getDate()); // Affichage de la date
+           // hdebutSpectacle.setText(spectacle.getH_debut());
+            titreSpectacle.setText(spectacle.getTitre());
+            //dateSpectacle.setText(spectacle.getDate());
 
+            // Formatage date et heure
+            String dateFormatee = formatDate(spectacle.getDate());
+            String heureFormatee = spectacle.getHeureDebut() != null ?
+                    formatHeure(spectacle.getHeureDebut()) : "";
+            dateHeureSpectacle.setText(String.format("%s • %s", dateFormatee, heureFormatee));
+
+            // Affichage du lieu
+            if (spectacle.getIdLieu() != null && spectacle.getIdLieu().getNom() != null) {
+                lieuSpectacle.setText(spectacle.getIdLieu().getNom());
+            } else {
+                lieuSpectacle.setText("Lieu non précisé");
+            }
             itemView.setOnClickListener(v -> listener.onSpectacleClick(spectacle));
         }
+        private String formatDate(String date) {
+            try {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date parsedDate = inputFormat.parse(date);
+                return outputFormat.format(parsedDate);
+            } catch (Exception e) {
+                return date;
+            }
+        }
+
+        private String formatHeure(Double heureDecimal) {
+            if (heureDecimal == null) return "";
+            int heures = (int) Math.floor(heureDecimal);
+            int minutes = (int) Math.round((heureDecimal - heures) * 60);
+            return String.format(Locale.getDefault(), "%dh%02d", heures, minutes);
+        }
     }
+
 }

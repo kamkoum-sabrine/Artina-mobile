@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 public class DetailSpectacleActivity extends AppCompatActivity {
 
     ImageView imageView;
-    TextView titreText, descriptionText;
+    TextView titreText, hdebutText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.detail_image);
         titreText = findViewById(R.id.detail_titre);
-        descriptionText = findViewById(R.id.detail_description);
+        hdebutText = findViewById(R.id.h_debut);
 
         Intent intent = getIntent();
        // String titre = intent.getStringExtra("titre");
@@ -34,9 +34,11 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         String titre = intent.getStringExtra("TITRE");
         String description = intent.getStringExtra("DESCRIPTION"); // active si tu veux
         String imagePath = intent.getStringExtra("IMAGE_PATH");
+        String hdebut = intent.getStringExtra("H_DEBUT");
 
         titreText.setText(titre);
-        descriptionText.setText(description);
+
+        hdebutText.setText(hdebut);
         //imageView.setImageResource(imagePath);
         if (imagePath != null && !imagePath.isEmpty()) {
             String imageUrl = "http://192.168.1.187:8081/api/images/" + imagePath;

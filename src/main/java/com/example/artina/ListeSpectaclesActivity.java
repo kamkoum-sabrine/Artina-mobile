@@ -32,13 +32,15 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
 
         // Initialisation des vues
         recyclerView = findViewById(R.id.recyclerViewSpectacles);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 colonnes
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1)); // 2 colonnes
 
         // Initialisation de l'adapter avec une liste vide
         adapter = new SpectacleAdapter(this, spectacleList, spectacle -> {
             Intent intent = new Intent(ListeSpectaclesActivity.this, DetailSpectacleActivity.class);
             intent.putExtra("SPECTACLE_ID", spectacle.getId());
             intent.putExtra("TITRE", spectacle.getTitre());
+            intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
+
          //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
             intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
 
