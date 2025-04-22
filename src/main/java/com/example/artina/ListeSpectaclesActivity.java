@@ -12,6 +12,7 @@ import com.example.artina.Spectacle;
 import com.example.artina.ApiClient;
 import com.example.artina.ApiService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,10 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
             Intent intent = new Intent(ListeSpectaclesActivity.this, DetailSpectacleActivity.class);
             intent.putExtra("SPECTACLE_ID", spectacle.getId());
             intent.putExtra("TITRE", spectacle.getTitre());
-            intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
 
+            intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
+            intent.putExtra("DATES", spectacle.getDate());
+            intent.putExtra("SPECTACLE", spectacle);
          //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
             intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
 

@@ -1,7 +1,12 @@
 package com.example.artina;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Spectacle {
+import java.io.Serializable;
+
+public class Spectacle implements Parcelable {
 
 
     @SerializedName("id")
@@ -20,7 +25,7 @@ public class Spectacle {
 
     private Lieu idLieu;
 
-    public static class Lieu {
+    public static class Lieu implements Parcelable {
         private Long id;
         private String nom;
         private String adresse;
@@ -48,6 +53,44 @@ public class Spectacle {
         public void setAdresse(String adresse) {
             this.adresse = adresse;
         }
+        protected Lieu(Parcel in) {
+            if (in.readByte() == 0) {
+                id = null;
+            } else {
+                id = in.readLong();
+            }
+            nom = in.readString();
+            adresse = in.readString();
+        }
+
+        public static final Creator<Lieu> CREATOR = new Creator<Lieu>() {
+            @Override
+            public Lieu createFromParcel(Parcel in) {
+                return new Lieu(in);
+            }
+
+            @Override
+            public Lieu[] newArray(int size) {
+                return new Lieu[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeLong(id);
+            }
+            dest.writeString(nom);
+            dest.writeString(adresse);
+        }
     }
 
     public void setIdLieu(Lieu idLieu) {
@@ -73,5 +116,41 @@ public class Spectacle {
 
     public void setHeureDebut(Double heureDebut) {
         this.heureDebut = heureDebut;
+    }
+
+    protected Spectacle(Parcel in) {
+        id = in.readLong();
+        titre = in.readString();
+        date = in.readString();
+        heureDebut = in.readDouble();
+        imagePath = in.readString();
+        idLieu = in.readParcelable(Lieu.class.getClassLoader());
+    }
+
+    public static final Creator<Spectacle> CREATOR = new Creator<Spectacle>() {
+        @Override
+        public Spectacle createFromParcel(Parcel in) {
+            return new Spectacle(in);
+        }
+
+        @Override
+        public Spectacle[] newArray(int size) {
+            return new Spectacle[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(titre);
+        dest.writeString(date);
+        dest.writeDouble(heureDebut);
+        dest.writeString(imagePath);
+        dest.writeParcelable(idLieu, flags);
     }
 }

@@ -109,10 +109,24 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
             //dateSpectacle.setText(spectacle.getDate());
 
             // Formatage date et heure
-            String dateFormatee = formatDate(spectacle.getDate());
-            String heureFormatee = spectacle.getHeureDebut() != null ?
-                    formatHeure(spectacle.getHeureDebut()) : "";
-            dateHeureSpectacle.setText(String.format("%s • %s", dateFormatee, heureFormatee));
+            // Formatage et affichage de la date et heure
+            try {
+                // Formatage de la date (ex: "2025-04-23" -> "23/04/2025")
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date date = inputFormat.parse(spectacle.getDate());
+                String dateFormatted = dateFormat.format(date);
+
+                // Formatage de l'heure (ex: 19 -> "19h00")
+                String heureFormatted = String.format(Locale.getDefault(), "%dh%02d",
+                        spectacle.getHeureDebut().intValue(), 0);
+
+                dateHeureSpectacle.setText(String.format("%s • %s", dateFormatted, heureFormatted));
+
+            } catch (Exception e) {
+                dateHeureSpectacle.setText("Date non disponible");
+                Log.e("DateFormat", "Erreur formatage date", e);
+            }
 
             // Affichage du lieu
             if (spectacle.getIdLieu() != null && spectacle.getIdLieu().getNom() != null) {
