@@ -14,6 +14,8 @@ import com.example.artina.ApiService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -68,8 +70,16 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Spectacle>> call, Response<List<Spectacle>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    List<Spectacle> spectacles = response.body();
+
+                    Collections.sort(spectacles, new Comparator<Spectacle>() {
+                        @Override
+                        public int compare(Spectacle s1, Spectacle s2) {
+                            return s2.getDate().compareTo(s1.getDate());
+                        }
+                    });
                     spectacleList.clear();
-                    spectacleList.addAll(response.body());
+                    spectacleList.addAll(spectacles);
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ListeSpectaclesActivity.this,
