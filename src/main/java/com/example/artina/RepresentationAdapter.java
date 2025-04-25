@@ -36,8 +36,11 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
     @Override
     public void onBindViewHolder(@NonNull RepresentationViewHolder holder, int position) {
         Representation representation = representations.get(position);
-        holder.bind(representation);
+       // holder.bind(representation);
        System.out.println("Representation "+representation.toString());
+        // Mettre à jour les vues avec les informations des représentations
+        holder.dateHeure.setText(representation.getDates());
+        holder.lieu.setText(representation.getLieu() != null ? representation.getLieu().getNom() : "Inconnu");
 
     }
 

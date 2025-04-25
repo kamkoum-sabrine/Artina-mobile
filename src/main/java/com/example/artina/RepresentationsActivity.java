@@ -1,6 +1,8 @@
 package com.example.artina;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,7 +31,37 @@ public class RepresentationsActivity extends AppCompatActivity {
         GroupeSpectacle groupeSpectacle = getIntent().getParcelableExtra("spectacle");
 
         if (groupeSpectacle != null) {
+            //representations = groupeSpectacle.getRepresentations();
             representations = groupeSpectacle.getRepresentations();
+            // Mettre à jour l'image du spectacle
+            ImageView imageSpectacle = findViewById(R.id.imageSpectacle);
+            String imagePath = groupeSpectacle.getImagePrincipale();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                String imageUrl = "http://192.168.1.18:8081/api/images/" + groupeSpectacle.getImagePrincipale();
+
+//                String imageUrl = "http://localhost:8081/api/images/spectacles/" + spectacle.getImagePath();
+                /**    Picasso.get()
+                 .load(imageUrl)
+                 .placeholder(R.drawable.artina)
+                 .error(R.drawable.artina)
+                 .into(imageSpectacle);**/
+                Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.artina)
+                        .error(R.drawable.artina)
+                        .into(imageSpectacle, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d("Picasso", "Image loaded successfully: " + imageUrl);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso", "Error loading image: " + imageUrl, e);
+                            }
+                        });
+
+            }
         }
 
 

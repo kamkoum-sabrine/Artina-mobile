@@ -60,13 +60,13 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
 
     class SpectacleViewHolder extends RecyclerView.ViewHolder {
         TextView titreSpectacle;
-        RecyclerView recyclerRepresentations;
+       // RecyclerView recyclerRepresentations;
 
         public SpectacleViewHolder(@NonNull View itemView) {
             super(itemView);
             titreSpectacle = itemView.findViewById(R.id.titreSpectacle);
             imageSpectacle = itemView.findViewById(R.id.imageSpectacle); // Nouvelle ligne
-            recyclerRepresentations = itemView.findViewById(R.id.recyclerRepresentations);
+          //  recyclerRepresentations = itemView.findViewById(R.id.recyclerRepresentations);
         }
 
         public void bind(GroupeSpectacle groupe) {
@@ -102,8 +102,8 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
             }
             // Adapter pour les représentations
             RepresentationAdapter representationAdapter = new RepresentationAdapter(context, groupe.getRepresentations());
-            recyclerRepresentations.setLayoutManager(new LinearLayoutManager(context));
-            recyclerRepresentations.setAdapter(representationAdapter);
+         //   recyclerRepresentations.setLayoutManager(new LinearLayoutManager(context));
+          //  recyclerRepresentations.setAdapter(representationAdapter);
         }
     }
 }
