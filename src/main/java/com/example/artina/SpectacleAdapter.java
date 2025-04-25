@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -18,72 +19,61 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.ViewHolder> {
-
+public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.SpectacleViewHolder> {
     private Context context;
-    private List<Spectacle> spectacleList;
-    private OnSpectacleClickListener listener;
+    private List<GroupeSpectacle> spectaclesGroupes;
 
-    public interface OnSpectacleClickListener {
-        void onSpectacleClick(Spectacle spectacle);
-    }
-
-    public SpectacleAdapter(Context context, List<Spectacle> spectacleList, OnSpectacleClickListener listener) {
+    ImageView imageSpectacle; // Nouvelle ligne
+    public SpectacleAdapter(Context context, List<GroupeSpectacle> spectaclesGroupes) {
         this.context = context;
-        this.spectacleList = spectacleList;
-        this.listener = listener;
+        this.spectaclesGroupes = spectaclesGroupes;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_spectacle, parent, false);
-        return new ViewHolder(view);
+    public SpectacleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_spectacle_groupe, parent, false);
+        return new SpectacleViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Spectacle spectacle = spectacleList.get(position);
-        holder.bind(spectacle, listener);
+    public void onBindViewHolder(@NonNull SpectacleViewHolder holder, int position) {
+        GroupeSpectacle groupe = spectaclesGroupes.get(position);
+        holder.bind(groupe);
     }
 
     @Override
     public int getItemCount() {
-        return spectacleList.size();
+        return (spectaclesGroupes != null) ? spectaclesGroupes.size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageSpectacle;
+
+    class SpectacleViewHolder extends RecyclerView.ViewHolder {
         TextView titreSpectacle;
-        TextView descriptionSpectacle;
-        TextView dateHeureSpectacle;
+        RecyclerView recyclerRepresentations;
 
-        TextView hdebutSpectacle;
-
-        TextView lieuSpectacle;
-
-        public ViewHolder(View itemView) {
+        public SpectacleViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageSpectacle = itemView.findViewById(R.id.imageSpectacle);
             titreSpectacle = itemView.findViewById(R.id.titreSpectacle);
-         //   descriptionSpectacle = itemView.findViewById(R.id.descriptionSpectacle);
-            dateHeureSpectacle = itemView.findViewById(R.id.dateHeureSpectacle);
-          //  hdebutSpectacle = itemView.findViewById(R.id.hdebutSpectacle);
-            lieuSpectacle = itemView.findViewById(R.id.lieuSpectacle); // Ajouté
+            imageSpectacle = itemView.findViewById(R.id.imageSpectacle); // Nouvelle ligne
+            recyclerRepresentations = itemView.findViewById(R.id.recyclerRepresentations);
         }
 
-        public void bind(Spectacle spectacle, OnSpectacleClickListener listener) {
-            // Chargement de l'image avec Picasso
-            if (spectacle.getImagePath() != null && !spectacle.getImagePath().isEmpty()) {
-                String imageUrl = "http://192.168.1.187:8081/api/images/" + spectacle.getImagePath();
+        public void bind(GroupeSpectacle groupe) {
+            titreSpectacle.setText(groupe.getTitre());
+
+            // Chargement de l'image principale
+           // String imageUrl = groupe.getImagePrincipale();
+            System.out.println("aaaaaaaaaa "+groupe.getImagePrincipale());
+            if (groupe.getImagePrincipale() != null && !groupe.getImagePrincipale().isEmpty()) {
+                String imageUrl = "http://192.168.1.18:8081/api/images/" + groupe.getImagePrincipale();
 
 //                String imageUrl = "http://localhost:8081/api/images/spectacles/" + spectacle.getImagePath();
-            /**    Picasso.get()
-                        .load(imageUrl)
-                        .placeholder(R.drawable.artina)
-                        .error(R.drawable.artina)
-                        .into(imageSpectacle);**/
+                /**    Picasso.get()
+                 .load(imageUrl)
+                 .placeholder(R.drawable.artina)
+                 .error(R.drawable.artina)
+                 .into(imageSpectacle);**/
                 Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.artina)
@@ -100,59 +90,10 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.View
                             }
                         });
             }
-
-            //   titreSpectacle.setText(spectacle.getTitre());
-          //  descriptionSpectacle.setText(spectacle.getDescription());
-          //  dateSpectacle.setText(spectacle.getDate()); // Affichage de la date
-           // hdebutSpectacle.setText(spectacle.getH_debut());
-            titreSpectacle.setText(spectacle.getTitre());
-            //dateSpectacle.setText(spectacle.getDate());
-
-            // Formatage date et heure
-            // Formatage et affichage de la date et heure
-            try {
-                // Formatage de la date (ex: "2025-04-23" -> "23/04/2025")
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                Date date = inputFormat.parse(spectacle.getDate());
-                String dateFormatted = dateFormat.format(date);
-
-                // Formatage de l'heure (ex: 19 -> "19h00")
-                String heureFormatted = String.format(Locale.getDefault(), "%dh%02d",
-                        spectacle.getHeureDebut().intValue(), 0);
-
-                dateHeureSpectacle.setText(String.format("%s • %s", dateFormatted, heureFormatted));
-
-            } catch (Exception e) {
-                dateHeureSpectacle.setText("Date non disponible");
-                Log.e("DateFormat", "Erreur formatage date", e);
-            }
-
-            // Affichage du lieu
-            if (spectacle.getIdLieu() != null && spectacle.getIdLieu().getNom() != null) {
-                lieuSpectacle.setText(spectacle.getIdLieu().getNom());
-            } else {
-                lieuSpectacle.setText("Lieu non précisé");
-            }
-            itemView.setOnClickListener(v -> listener.onSpectacleClick(spectacle));
-        }
-        private String formatDate(String date) {
-            try {
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                Date parsedDate = inputFormat.parse(date);
-                return outputFormat.format(parsedDate);
-            } catch (Exception e) {
-                return date;
-            }
-        }
-
-        private String formatHeure(Double heureDecimal) {
-            if (heureDecimal == null) return "";
-            int heures = (int) Math.floor(heureDecimal);
-            int minutes = (int) Math.round((heureDecimal - heures) * 60);
-            return String.format(Locale.getDefault(), "%dh%02d", heures, minutes);
+            // Adapter pour les représentations
+            RepresentationAdapter representationAdapter = new RepresentationAdapter(context, groupe.getRepresentations());
+            recyclerRepresentations.setLayoutManager(new LinearLayoutManager(context));
+            recyclerRepresentations.setAdapter(representationAdapter);
         }
     }
-
 }

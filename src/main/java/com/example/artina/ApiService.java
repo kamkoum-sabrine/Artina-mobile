@@ -18,4 +18,12 @@ public interface ApiService {
 
     @GET("api/billets/by-spectacle/{spectacleId}")
     Call<List<Billet>> getBuilletsBySpectacleId(@Path("spectacleId") Long id);
+
+    @GET("api/spectacles/grouped")
+    Call<List<GroupeSpectacle>> getGroupedSpectacles1();
+
+    @GET("api/spectacles/grouped-by-titre")
+    Call<List<GroupeSpectacle>> getGroupedSpectacles();
+
+
 }

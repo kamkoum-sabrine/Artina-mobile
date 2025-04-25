@@ -1,11 +1,14 @@
 package com.example.artina;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artina.Spectacle;
@@ -23,76 +26,46 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListeSpectaclesActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private SpectacleAdapter adapter;
-    private List<Spectacle> spectacleList = new ArrayList<>();
+    private List<GroupeSpectacle> spectaclesGroupes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_spectacles);
 
-        // Initialisation des vues
         recyclerView = findViewById(R.id.recyclerViewSpectacles);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1)); // 2 colonnes
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        spectaclesGroupes = new ArrayList<>();
 
-        // Initialisation de l'adapter avec une liste vide
-        adapter = new SpectacleAdapter(this, spectacleList, spectacle -> {
-            Intent intent = new Intent(ListeSpectaclesActivity.this, DetailSpectacleActivity.class);
-            intent.putExtra("SPECTACLE_ID", spectacle.getId());
-            intent.putExtra("TITRE", spectacle.getTitre());
-
-            intent.putExtra("HEURE_DEBUT", spectacle.getHeureDebut());
-            intent.putExtra("ID", spectacle.getId());
-            intent.putExtra("LIEU", spectacle.getIdLieu().getNom());
-            intent.putExtra("ADRESSE", spectacle.getIdLieu().getAdresse());
-            intent.putExtra("VILLE", spectacle.getIdLieu().getVille());
-            intent.putExtra("DATES", spectacle.getDate());
-            intent.putExtra("SPECTACLE", spectacle);
-         //   intent.putExtra("DESCRIPTION", spectacle.getDescription());
-            intent.putExtra("IMAGE_PATH", spectacle.getImagePath());
-
-
-            startActivity(intent);
-        });
+        adapter = new SpectacleAdapter(this, spectaclesGroupes);
         recyclerView.setAdapter(adapter);
 
-        // Chargement des données depuis l'API
-        loadSpectaclesFromApi();
+        loadSpectaclesFromApi(); // Appel au backend
     }
 
     private void loadSpectaclesFromApi() {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<Spectacle>> call = apiService.getAllSpectacles();
+        Call<List<GroupeSpectacle>> call = apiService.getGroupedSpectacles();
 
-        call.enqueue(new Callback<List<Spectacle>>() {
+        call.enqueue(new Callback<List<GroupeSpectacle>>() {
             @Override
-            public void onResponse(Call<List<Spectacle>> call, Response<List<Spectacle>> response) {
+            public void onResponse(Call<List<GroupeSpectacle>> call, Response<List<GroupeSpectacle>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Spectacle> spectacles = response.body();
-
-                    Collections.sort(spectacles, new Comparator<Spectacle>() {
-                        @Override
-                        public int compare(Spectacle s1, Spectacle s2) {
-                            return s2.getDate().compareTo(s1.getDate());
-                        }
-                    });
-                    spectacleList.clear();
-                    spectacleList.addAll(spectacles);
+                    spectaclesGroupes.clear();
+                    spectaclesGroupes.addAll(response.body());
+                    System.out.println(spectaclesGroupes);
                     adapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(ListeSpectaclesActivity.this,
-                            "Erreur de chargement des spectacles",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListeSpectaclesActivity.this, "Erreur de chargement", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Spectacle>> call, Throwable t) {
-                Toast.makeText(ListeSpectaclesActivity.this,
-                        "Échec de la connexion: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<GroupeSpectacle>> call, Throwable t) {
+                Toast.makeText(ListeSpectaclesActivity.this, "Erreur réseau", Toast.LENGTH_SHORT).show();
+                Log.e("API", "Erreur réseau", t);
             }
         });
     }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Spectacle implements Parcelable {
 
 
+
     @SerializedName("id")
     private Long id;
 
@@ -35,6 +36,8 @@ public class Spectacle implements Parcelable {
     }
 
     private Lieu idLieu;
+
+    public Spectacle(){}
 
     public static class Lieu implements Parcelable {
         private Long id;
@@ -139,6 +142,7 @@ public class Spectacle implements Parcelable {
         this.heureDebut = heureDebut;
     }
 
+
     protected Spectacle(Parcel in) {
         id = in.readLong();
         titre = in.readString();
@@ -173,5 +177,18 @@ public class Spectacle implements Parcelable {
         dest.writeDouble(heureDebut);
         dest.writeString(imagePath);
         dest.writeParcelable(idLieu, flags);
+    }
+
+    @Override
+    public String toString() {
+        return "Spectacle{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", date='" + date + '\'' +
+                ", heureDebut=" + heureDebut +
+                ", imagePath='" + imagePath + '\'' +
+                ", imagePathVertical='" + imagePathVertical + '\'' +
+                ", idLieu=" + idLieu +
+                '}';
     }
 }

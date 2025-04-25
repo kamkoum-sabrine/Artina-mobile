@@ -44,14 +44,14 @@
                 android:textSize="16sp"
                />
 
-            <TextView
+          <!--  <TextView
                 android:id="@+id/prixMin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="#E50914"
                 android:textSize="16sp"
-                android:text="A partir de 30 TND"/>
+                android:text="A partir de 30 TND"/>-->
         </LinearLayout>
         <!-- Section Lieu - Nom, Adresse, Ville -->
         <LinearLayout
@@ -107,29 +107,60 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <!-- Section Date/Heure -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1E1E1E"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_calendar"
-                app:tint="#E50914"/>
-
-
-            <TextView
-                android:id="@+id/dateHeureSpectacleDetail"
-                android:layout_width="wrap_content"
+            <!-- Ligne Date -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="#E50914"/>
+
+                <TextView
+                    android:id="@+id/dateHeureSpectacleDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <!-- Ligne Durée -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clock"
+                    app:tint="#E50914"/>
+
+                <TextView
+                    android:id="@+id/dureeSpectacleDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="#FFFFFF"
+                    android:text="2 heures"
+                    android:textSize="16sp"/>
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
