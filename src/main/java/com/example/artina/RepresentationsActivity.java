@@ -7,18 +7,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class RepresentationsActivity extends AppCompatActivity {
+    private RecyclerView recyclerViewRepresentations;
+    private RepresentationAdapter adapter;
+    private List<Representation> representations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_representations);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recyclerViewRepresentations), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // Récupérer l'objet GroupeSpectacle depuis l'intent
+        GroupeSpectacle groupeSpectacle = getIntent().getParcelableExtra("spectacle");
+
+        if (groupeSpectacle != null) {
+            representations = groupeSpectacle.getRepresentations();
+        }
+
+
+        // Initialiser le RecyclerView
+        recyclerViewRepresentations = findViewById(R.id.recyclerRepresentations);
+
+        // Configurer le RecyclerView avec un LinearLayoutManager
+        recyclerViewRepresentations.setLayoutManager(new LinearLayoutManager(this));
+
+        // Créer l'adaptateur en passant le Context et la liste des représentations
+        adapter = new RepresentationAdapter(this, representations);  // Passer le Context et la liste
+
+        // Configurer l'adaptateur pour le RecyclerView
+        recyclerViewRepresentations.setAdapter(adapter);
     }
 }

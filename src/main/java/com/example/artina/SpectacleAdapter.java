@@ -1,6 +1,7 @@
 package com.example.artina;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,15 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
     public void onBindViewHolder(@NonNull SpectacleViewHolder holder, int position) {
         GroupeSpectacle groupe = spectaclesGroupes.get(position);
         holder.bind(groupe);
+
+        // Ajouter le clic sur l'élément
+        holder.itemView.setOnClickListener(v -> {
+            // Créer un Intent pour démarrer l'activité de représentation
+            Intent intent = new Intent(context, RepresentationsActivity.class);
+            System.out.println("Spectacle "+groupe.toString());
+            intent.putExtra("spectacle", groupe); // Passer l'objet groupe à l'activité suivante
+            context.startActivity(intent);
+        });
     }
 
     @Override

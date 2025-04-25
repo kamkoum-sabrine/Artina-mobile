@@ -3,10 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewRepresentations"
+        android:id="@+id/recyclerRepresentations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

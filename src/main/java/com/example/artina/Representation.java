@@ -1,6 +1,13 @@
 package com.example.artina;
 
-public class Representation {
+import java.io.Serializable;
+
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Representation implements Parcelable {
+
     private int idSpec;
     private Spectacle spectacle;
     private String dates;
@@ -9,9 +16,47 @@ public class Representation {
     private Spectacle.Lieu lieu;
     private String imagePath;
 
-    // Getters et setters
+    // Constructor, getters et setters
 
+    protected Representation(Parcel in) {
+        idSpec = in.readInt();
+        spectacle = in.readParcelable(Spectacle.class.getClassLoader());
+        dates = in.readString();
+        hDebut = in.readDouble();
+        durees = in.readDouble();
+        lieu = in.readParcelable(Spectacle.Lieu.class.getClassLoader());
+        imagePath = in.readString();
+    }
 
+    public static final Creator<Representation> CREATOR = new Creator<Representation>() {
+        @Override
+        public Representation createFromParcel(Parcel in) {
+            return new Representation(in);
+        }
+
+        @Override
+        public Representation[] newArray(int size) {
+            return new Representation[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idSpec);
+        dest.writeParcelable(spectacle, flags);
+        dest.writeString(dates);
+        dest.writeDouble(hDebut);
+        dest.writeDouble(durees);
+        dest.writeParcelable(lieu, flags);
+        dest.writeString(imagePath);
+    }
+
+    // Getters et Setters
     public void setSpectacle(Spectacle spectacle) {
         this.spectacle = spectacle;
     }
@@ -67,6 +112,7 @@ public class Representation {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
     @Override
     public String toString() {
         return "Representation{" +
@@ -74,10 +120,9 @@ public class Representation {
                 ", dates='" + dates + '\'' +
                 ", hDebut=" + hDebut +
                 ", durees=" + durees +
-                ", spectacle="+spectacle+
+                ", spectacle=" + spectacle +
                 ", lieu=" + (lieu != null ? lieu.getNom() : "null") +
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
-
 }

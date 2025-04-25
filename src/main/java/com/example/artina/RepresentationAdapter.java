@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class RepresentationAdapter extends RecyclerView.Adapter<RepresentationAdapter.RepresentationViewHolder> {
+public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationAdapter.RepresentationViewHolder>  {
     private Context context;
     private List<Representation> representations;
 
@@ -37,12 +37,14 @@ public class RepresentationAdapter extends RecyclerView.Adapter<RepresentationAd
     public void onBindViewHolder(@NonNull RepresentationViewHolder holder, int position) {
         Representation representation = representations.get(position);
         holder.bind(representation);
+       System.out.println("Representation "+representation.toString());
 
     }
 
     @Override
     public int getItemCount() {
-        return representations.size();
+        return (representations != null) ? representations.size() : 0;
+        //return representations.size();
     }
 
     class RepresentationViewHolder extends RecyclerView.ViewHolder {
@@ -53,7 +55,7 @@ public class RepresentationAdapter extends RecyclerView.Adapter<RepresentationAd
             super(itemView);
             dateHeure = itemView.findViewById(R.id.dateHeure);
             lieu = itemView.findViewById(R.id.lieu);
-            image = itemView.findViewById(R.id.imageRepresentation);
+           // image = itemView.findViewById(R.id.imageRepresentation);
         }
 
         public void bind(Representation representation) {
@@ -66,11 +68,11 @@ public class RepresentationAdapter extends RecyclerView.Adapter<RepresentationAd
 
             // Charger l'image si disponible
             //System.out.println("Imaageee "+representation.getSpectacle().getImagePath());
-            if (representation.getImagePath() != null) {
+           /** if (representation.getImagePath() != null) {
                 Picasso.get()
                         .load("http://192.168.1.18:8081/api/images/" + representation.getImagePath())
                         .into(image);
-            }
+            }**/
         }
 
         private String formatDate(String dateStr) {
