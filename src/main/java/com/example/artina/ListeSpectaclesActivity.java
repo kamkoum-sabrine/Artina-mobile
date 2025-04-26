@@ -55,7 +55,6 @@ public class ListeSpectaclesActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     spectaclesGroupes.clear();
                     spectaclesGroupes.addAll(response.body());
-                    System.out.println(spectaclesGroupes);
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ListeSpectaclesActivity.this, "Erreur de chargement", Toast.LENGTH_SHORT).show();

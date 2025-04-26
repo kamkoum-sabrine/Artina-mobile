@@ -1,45 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="#000000"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/ic_location"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/location_red" />
-
+    <!-- Première ligne : Lieu + icône localisation -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingStart="8dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="4dp">
+
+        <ImageView
+            android:id="@+id/ic_location"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/location_red"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/lieuRepresentation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    <!--    <ImageButton
+            android:id="@+id/btnVoirLocalisation"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_maps"
+            android:contentDescription="Voir la localisation"
+            app:tint="#e50914" />-->
+    </LinearLayout>
+
+    <!-- Deuxième ligne : Date et Heure -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ic_clock"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/calendar_red"
+            android:layout_marginEnd="8dp"/>
 
         <TextView
             android:id="@+id/dateHeure"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/lieu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="4dp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ic_clock"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/calendar_red"
-        android:layout_gravity="center_vertical" />
+    <!-- Troisième ligne : Ticket + prix -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ic_ticket"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ticket"
+            android:layout_marginEnd="8dp"
+            app:tint="#e50914" />
+
+        <TextView
+            android:id="@+id/textePrix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="À partir de 25 TND"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- Bouton Plus de détails -->
+    <Button
+        android:id="@+id/btnDetailsReserver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#e50914"
+        android:text="@string/consulter_r_server"
+        android:textColor="@android:color/white"/>
+
+    <!-- Séparateur -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 </LinearLayout>

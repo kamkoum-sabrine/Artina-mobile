@@ -1,9 +1,13 @@
 package com.example.artina;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +45,41 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
         // Mettre à jour les vues avec les informations des représentations
         holder.dateHeure.setText(representation.getDates());
         holder.lieu.setText(representation.getLieu() != null ? representation.getLieu().getNom() : "Inconnu");
+        if (representation.getLieu() != null && representation.getLieu().getUrl() != null) {
+            holder.lieu.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(representation.getLieu().getUrl()));
+                v.getContext().startActivity(intent);
+            });
+           /* holder.btnVoirLocalisation.setOnClickListener(v -> {
+                String lieu = holder.lieu.getText().toString();
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(lieu));
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                v.getContext().startActivity(mapIntent);
+            });*/
+
+            // Ajouter soulignement pour montrer que c'est cliquable
+           // holder.lieu.setPaintFlags(holder.lieu.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            holder.lieu.setOnClickListener(null); // Pas cliquable si pas d'URL
+        }
+
+        holder.btnDetailsReserver.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailSpectacleActivity.class);
+
+            // Envoyer les infos dont tu as besoin
+            intent.putExtra("TITRE", representation.getTitre());
+         //   intent.putExtra("DESCRIPTION", representation.getSpectacle().getDescription());
+            intent.putExtra("IMAGE_PATH", representation.getImagePath());
+            intent.putExtra("LIEU", representation.getLieu() != null ? representation.getLieu().getNom() : "Lieu inconnu");
+            intent.putExtra("VILLE", representation.getLieu() != null ? representation.getLieu().getVille() : "Ville inconnue");
+            intent.putExtra("ADRESSE", representation.getLieu() != null ? representation.getLieu().getAdresse() : "Adresse inconnue");
+            intent.putExtra("HEURE_DEBUT", representation.gethDebut());
+            intent.putExtra("DATES", representation.getDates());
+            intent.putExtra("ID", representation.getIdSpec()); // Pour charger les billets
+
+            context.startActivity(intent);
+        });
 
     }
 
@@ -54,10 +93,16 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
         TextView dateHeure, lieu;
         ImageView image;
 
+        Button btnDetailsReserver;
+
+        // ImageView btnVoirLocalisation;
+
         public RepresentationViewHolder(@NonNull View itemView) {
             super(itemView);
             dateHeure = itemView.findViewById(R.id.dateHeure);
-            lieu = itemView.findViewById(R.id.lieu);
+            lieu = itemView.findViewById(R.id.lieuRepresentation);
+            btnDetailsReserver = itemView.findViewById(R.id.btnDetailsReserver);
+            // btnVoirLocalisation = itemView.findViewById(R.id.btnVoirLocalisation);
            // image = itemView.findViewById(R.id.imageRepresentation);
         }
 
@@ -66,7 +111,7 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
             String dateFormatee = formatDate(representation.getDates());
             String heureFormatee = formatHeure(representation.gethDebut());
             dateHeure.setText(dateFormatee + " • " + heureFormatee);
-
+            System.out.println("reeeeppp "+representation.getLieu().getNom());
             lieu.setText(representation.getLieu().getNom());
 
             // Charger l'image si disponible

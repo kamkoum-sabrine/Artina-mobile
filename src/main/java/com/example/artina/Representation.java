@@ -6,28 +6,46 @@ import java.io.Serializable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Representation implements Parcelable {
 
-    private int idSpec;
-    private Spectacle spectacle;
+    @SerializedName("idSpec")
+    private Long idSpec;
+
+    @SerializedName("dates")
     private String dates;
+
+    @SerializedName("hDebut")
     private double hDebut;
+
+    @SerializedName("durees")
     private double durees;
-    private Spectacle.Lieu lieu;
+
+    @SerializedName("lieu")
+    private Lieu lieu;
+
+    @SerializedName("imagePath")
     private String imagePath;
 
+    @SerializedName("imagePathVertical")
+    private String imagePathVertical;
+
+    @SerializedName("titre")
+    private String titre;
     // Constructor, getters et setters
 
+
     protected Representation(Parcel in) {
-        idSpec = in.readInt();
-        spectacle = in.readParcelable(Spectacle.class.getClassLoader());
+        idSpec = in.readLong();
         dates = in.readString();
         hDebut = in.readDouble();
         durees = in.readDouble();
-        lieu = in.readParcelable(Spectacle.Lieu.class.getClassLoader());
+        titre = in.readString();
+        lieu = in.readParcelable(Lieu.class.getClassLoader());
         imagePath = in.readString();
+        imagePathVertical = in.readString();  // Ajouté pour lire imagePathVertical
     }
-
     public static final Creator<Representation> CREATOR = new Creator<Representation>() {
         @Override
         public Representation createFromParcel(Parcel in) {
@@ -47,25 +65,27 @@ public class Representation implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(idSpec);
-        dest.writeParcelable(spectacle, flags);
+        dest.writeLong(idSpec);
         dest.writeString(dates);
         dest.writeDouble(hDebut);
         dest.writeDouble(durees);
+        dest.writeString(titre);
         dest.writeParcelable(lieu, flags);
         dest.writeString(imagePath);
+        dest.writeString(imagePathVertical);  // Ajouté pour écrire imagePathVertical
     }
 
+
     // Getters et Setters
-    public void setSpectacle(Spectacle spectacle) {
+   /* public void setSpectacle(Spectacle spectacle) {
         this.spectacle = spectacle;
     }
 
     public Spectacle getSpectacle() {
         return spectacle;
-    }
+    }*/
 
-    public int getIdSpec() {
+    public Long getIdSpec() {
         return idSpec;
     }
 
@@ -81,7 +101,7 @@ public class Representation implements Parcelable {
         return hDebut;
     }
 
-    public Spectacle.Lieu getLieu() {
+    public Lieu getLieu() {
         return lieu;
     }
 
@@ -89,8 +109,24 @@ public class Representation implements Parcelable {
         return imagePath;
     }
 
-    public void setIdSpec(int idSpec) {
+    public void setIdSpec(Long idSpec) {
         this.idSpec = idSpec;
+    }
+
+    public String getImagePathVertical() {
+        return imagePathVertical;
+    }
+
+    public void setImagePathVertical(String imagePathVertical) {
+        this.imagePathVertical = imagePathVertical;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getTitre() {
+        return titre;
     }
 
     public void setDates(String dates) {
@@ -105,7 +141,7 @@ public class Representation implements Parcelable {
         this.durees = durees;
     }
 
-    public void setLieu(Spectacle.Lieu lieu) {
+    public void setLieu(Lieu lieu) {
         this.lieu = lieu;
     }
 
@@ -120,7 +156,7 @@ public class Representation implements Parcelable {
                 ", dates='" + dates + '\'' +
                 ", hDebut=" + hDebut +
                 ", durees=" + durees +
-                ", spectacle=" + spectacle +
+              //  ", spectacle=" + spectacle +
                 ", lieu=" + (lieu != null ? lieu.getNom() : "null") +
                 ", imagePath='" + imagePath + '\'' +
                 '}';
