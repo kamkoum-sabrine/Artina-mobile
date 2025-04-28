@@ -37,7 +37,7 @@ public class RepresentationsActivity extends AppCompatActivity {
             ImageView imageSpectacle = findViewById(R.id.imageSpectacle);
             String imagePath = groupeSpectacle.getImagePrincipale();
             if (imagePath != null && !imagePath.isEmpty()) {
-                String imageUrl = "http://192.168.1.18:8081/api/images/" + groupeSpectacle.getImagePrincipale();
+                String imageUrl = "http://192.168.1.187:8081/api/images/" + groupeSpectacle.getImagePrincipale();
 
 //                String imageUrl = "http://localhost:8081/api/images/spectacles/" + spectacle.getImagePath();
                 /**    Picasso.get()

@@ -17,6 +17,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReservationInviteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".RepresentationsActivity"
             android:exported="false" />
         <activity

@@ -1,17 +1,28 @@
 package com.example.artina;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +39,8 @@ public class DetailSpectacleActivity extends AppCompatActivity {
 
     ImageView imageView;
     TextView titreText, hdebutText;
+
+    Button btnReserver;
     private BilletAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -44,6 +57,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         imageView = findViewById(R.id.detail_image);
         titreText = findViewById(R.id.detail_titre);
+        btnReserver = findViewById(R.id.btnReserver);
 
         TextView lieuNom = findViewById(R.id.lieuNom);
         TextView lieuAdresse = findViewById(R.id.lieuAdresse);
@@ -83,7 +97,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         }
 
         if (imagePath != null && !imagePath.isEmpty()) {
-            String imageUrl = "http://192.168.1.18:8081/api/images/" + imagePath;
+            String imageUrl = "http://192.168.1.187:8081/api/images/" + imagePath;
             Picasso.get()
                     .load(imageUrl)
                     .placeholder(R.drawable.artina)
@@ -97,6 +111,12 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         // Chargement des données depuis l'API
         System.out.println("id  "+idSpec);
         loadBilletsFromApi(idSpec);
+        btnReserver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showReservationDialog();
+            }
+        });
     }
 
     private void loadBilletsFromApi(Long idSpectacles) {
@@ -131,5 +151,44 @@ public class DetailSpectacleActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showReservationDialog() {
+        // 1. Utilisez le contexte de l'activité (THIS est crucial)
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetStyle);
+
+        // 2. Inflatez le layout SANS le rattacher à une racine
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_reservation, null);
+        dialog.setContentView(dialogView);
+
+        // 3. Empêchez le fond blanc parasite
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // Configuration des boutons
+        Button btnSeConnecter = dialog.findViewById(R.id.btnSeConnecter);
+        Button btnSInscrire = dialog.findViewById(R.id.btnSInscrire);
+        Button btnContinuerInvite = dialog.findViewById(R.id.btnContinuerInvite);
+
+        btnSeConnecter.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            dialog.dismiss();
+        });
+
+        btnSInscrire.setOnClickListener(v -> {
+            startActivity(new Intent(this, RegisterActivity.class));
+            dialog.dismiss();
+        });
+
+        btnContinuerInvite.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReservationInviteActivity.class));
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    private void continuerEnInvite() {
+        // Ici, tu peux lancer l'activité de réservation directement
+        Intent intent = new Intent(getApplicationContext(), ReservationInviteActivity.class);
+        startActivity(intent);
     }
 }

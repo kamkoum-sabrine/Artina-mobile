@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Text Styles -->
     <style name="TextSpectacleTitle">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <!-- Dialog Themes -->
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="colorSurface">@android:color/white</item>
+    </style>
+
+    <!-- Bottom Sheet Styles -->
+    <style name="BottomSheetStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="shapeAppearanceOverlay">@style/BottomSheetShapeAppearance</item>
+    </style>
+
+    <style name="BottomSheetShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+    </style>
+
+    <!-- Color Definitions -->
+    <color name="artina_primary">#E50914</color>
+    <color name="artina_dark_bg">#1A1A1A</color>
+    <color name="artina_secondary_bg">#2A2A2A</color>
+    <color name="artina_text_secondary">#AAAAAA</color>
+
+    <!-- Button Styles -->
+    <style name="ArtinaButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">@color/artina_primary</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ArtinaButtonSecondary" parent="ArtinaButton">
+        <item name="backgroundTint">@color/artina_secondary_bg</item>
+        <item name="android:textColor">@color/artina_text_secondary</item>
     </style>
 </resources>
