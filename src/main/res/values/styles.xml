@@ -32,9 +32,9 @@
 
     <!-- Color Definitions -->
     <color name="artina_primary">#E50914</color>
-    <color name="artina_dark_bg">#1A1A1A</color>
-    <color name="artina_secondary_bg">#2A2A2A</color>
-    <color name="artina_text_secondary">#AAAAAA</color>
+    <color name="artina_dark_bg">#000000</color>
+    <color name="artina_secondary_bg">#000000</color>
+    <color name="artina_text_secondary">#FFFFFF</color>
 
     <!-- Button Styles -->
     <style name="ArtinaButton" parent="Widget.MaterialComponents.Button">
@@ -50,5 +50,44 @@
     <style name="ArtinaButtonSecondary" parent="ArtinaButton">
         <item name="backgroundTint">@color/artina_secondary_bg</item>
         <item name="android:textColor">@color/artina_text_secondary</item>
+    </style>
+
+
+    <!-- Styles pour les champs de saisie -->
+    <!-- Style amélioré pour les champs de saisie -->
+    <style name="ArtinaInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Border Colors -->
+        <item name="boxStrokeColor">@color/artina_primary</item>
+        <item name="boxStrokeErrorColor">@color/artina_primary</item>
+
+        <!-- Text Colors -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/artina_text_secondary</item>
+        <item name="hintTextColor">@color/artina_primary</item>
+
+        <!-- Shape Appearance - NEW CORRECT WAY -->
+        <item name="shapeAppearance">@style/ArtinaInputShape</item>
+        <item name="shapeAppearanceOverlay">@style/ArtinaInputShape</item>
+    </style>
+
+    <style name="ArtinaInputShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <color name="artina_input_stroke">#E50914</color> <!-- Rouge Artina -->
+    <color name="artina_input_text">#FFFFFF</color> <!-- Texte blanc -->
+    <color name="artina_input_hint">#AAAAAA</color> <!-- Hint gris -->
+    <!-- Style pour l'activité -->
+    <style name="LoginTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="colorPrimary">@color/artina_primary</item>
+    </style>
+
+    <style name="PasswordTextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.2</item>
     </style>
 </resources>

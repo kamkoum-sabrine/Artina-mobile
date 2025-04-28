@@ -8,17 +8,6 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp">
     <!-- Titre -->
-    <TextView
-        android:id="@+id/titreDialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Options de compte"
-        android:textColor="#E50914"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="#121212"/>
 
     <!-- Bouton Connexion -->
     <Button
@@ -32,6 +21,7 @@
     <Button
         android:id="@+id/btnSInscrire"
         style="@style/ArtinaButtonSecondary"
+
         android:text="Créer un compte"/>
 
     <Button
