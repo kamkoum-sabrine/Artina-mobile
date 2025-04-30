@@ -33,9 +33,19 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+            System.out.println("Email "+email);
+            System.out.println("Password "+password);
 
             if (validateInputs(email, password)) {
-                loginUser(email, password);
+                System.out.println("+++++++++++++++++++++");
+                //loginUser(email, password);
+                if (email.equals("kamkoumsabrine@gmail.com")&&(password.equals("password"))){
+                    navigateToHome();
+                }
+                else {
+                    showError("Email ou mot de passe incorrect");
+
+                }
             }
         });
     }
@@ -51,10 +61,11 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                System.out.println("response "+response);
                 if (response.isSuccessful() && response.body() != null) {
                     // Login réussi
-                    LoginResponse.Client client = response.body().getClient();
-                    navigateToHome(client);
+                    Client client = response.body().getClient();
+                   // navigateToHome(client);
                 } else {
                     // Erreur de login
                     showError("Email ou mot de passe incorrect");
@@ -68,12 +79,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToHome(LoginResponse.Client client) {
+   /* private void navigateToHome(Client client) {
         Intent intent = new Intent(this, DetailSpectacleActivity.class);
         intent.putExtra("CLIENT_ID", client.getId());
         startActivity(intent);
         finish();
-    }
+    }*/
+
+    private void navigateToHome() {
+        Intent intent = new Intent(this, ReservationInviteActivity.class);
+      //  intent.putExtra("CLIENT_ID", client.getId());
+        startActivity(intent);
+        finish();
+        }
 
     private void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

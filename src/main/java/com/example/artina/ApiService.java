@@ -31,66 +31,9 @@ public interface ApiService {
     @POST("api/auth/login")
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
+    @POST("api/users")
+    Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
 
-}
-class LoginResponse {
-    private String message;
-    private Client client;
 
-    public String getMessage() {
-        return message;
-    }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    // Getters & Setters
-    class Client {
-        private Long id;
-        private String nom;
-        private String prenom;
-        private String email;
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getNom() {
-            return nom;
-        }
-
-        public String getPrenom() {
-            return prenom;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-
-        public void setPrenom(String prenom) {
-            this.prenom = prenom;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-        // Getters & Setters
-    }
 }
