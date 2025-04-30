@@ -2,82 +2,78 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/artina_dark_bg"
-    android:fillViewport="true">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
 
-        <!-- Titre -->
+        <!-- Titre du Spectacle -->
         <TextView
-            style="@style/TextSpectacleTitle"
+            android:id="@+id/tvTitreSpectacle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Réserver un spectacle"
-            android:textAlignment="center"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="24dp"/>
+            android:text="Titre du spectacle"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-        <!-- Champ Nom du spectacle -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
+        <TextView
+            android:id="@+id/tvDateLieu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/spectacle_name_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nom du spectacle"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Champ Date du spectacle -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
+        <!-- Nom -->
+        <EditText
+            android:id="@+id/nomReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:hint="Nom"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="8dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/date_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date du spectacle"
-                android:focusable="false"
-                android:clickable="true"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Champ Nombre de billets -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
+        <!-- Prénom -->
+        <EditText
+            android:id="@+id/prenomReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+            android:hint="Prénom"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="8dp"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nb_billets_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre de billets"
-                android:inputType="number"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint"/>
-        </com.google.android.material.textfield.TextInputLayout>
+        <!-- Email -->
+        <EditText
+            android:id="@+id/emailReservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="8dp"/>
+        <!-- Liste déroulante des billets -->
+        <!-- Liste déroulante des billets -->
+        <Spinner
+            android:id="@+id/spinnerCategorieBillet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
 
-        <!-- Bouton Réserver -->
+        <EditText
+            android:id="@+id/nombreBillets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre de billets"
+            android:inputType="number" />
+
         <Button
-            android:id="@+id/btn_reserver"
-            style="@style/ArtinaButton"
+            android:id="@+id/btnConfirmerReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Réserver maintenant"/>
+            android:layout_marginTop="24dp"
+            android:text="Réserver" />
+
     </LinearLayout>
 </ScrollView>

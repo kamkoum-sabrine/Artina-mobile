@@ -114,7 +114,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         btnReserver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showReservationDialog();
+                showReservationDialog(idSpec);
             }
         });
     }
@@ -153,7 +153,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         });
     }
 
-    private void showReservationDialog() {
+    private void showReservationDialog(Long idSpec) {
         // 1. Utilisez le contexte de l'activité (THIS est crucial)
         BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetStyle);
 
@@ -169,17 +169,23 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         Button btnContinuerInvite = dialog.findViewById(R.id.btnContinuerInvite);
 
         btnSeConnecter.setOnClickListener(v -> {
-            startActivity(new Intent(this, LoginActivity.class));
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+            startActivity(loginIntent);
             dialog.dismiss();
         });
 
         btnSInscrire.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegisterActivity.class));
+            Intent loginIntent = new Intent(this, RegisterActivity.class);
+            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+            startActivity(loginIntent);
             dialog.dismiss();
         });
 
         btnContinuerInvite.setOnClickListener(v -> {
-            startActivity(new Intent(this, ReservationInviteActivity.class));
+            Intent loginIntent = new Intent(this, ReservationInviteActivity.class);
+            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+            startActivity(loginIntent);
             dialog.dismiss();
         });
 

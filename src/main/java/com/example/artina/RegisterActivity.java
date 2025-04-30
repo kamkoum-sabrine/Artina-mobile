@@ -65,7 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                     // Redirection vers LoginActivity après quelques secondes (optionnel)
                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        int spectacleId = getIntent().getIntExtra("spectacle_id", -1);
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        intent.putExtra("spectacle_id", spectacleId); // Passer l'ID de spectacle
                         startActivity(intent);
                         finish(); // Pour ne pas revenir à CreateAccountActivity avec le bouton retour
                     }, 1500); // délai en ms pour laisser le temps au toast

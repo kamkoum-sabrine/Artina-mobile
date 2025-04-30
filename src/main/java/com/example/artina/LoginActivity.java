@@ -87,8 +87,10 @@ public class LoginActivity extends AppCompatActivity {
     }*/
 
     private void navigateToHome() {
+        Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
+        System.out.println("pppsstttt "+spectacleId);
         Intent intent = new Intent(this, ReservationInviteActivity.class);
-      //  intent.putExtra("CLIENT_ID", client.getId());
+        intent.putExtra("spectacle_id", spectacleId);
         startActivity(intent);
         finish();
         }
