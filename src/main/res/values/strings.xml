@@ -49,4 +49,9 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="consulter_r_server"><![CDATA[Consulter & Réserver]]></string>
+    <string-array name="search_criteria">
+        <item>Titre</item>
+        <item>Date</item>
+        <item>Lieu</item>
+    </string-array>
 </resources>

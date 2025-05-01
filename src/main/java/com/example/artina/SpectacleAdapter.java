@@ -30,6 +30,12 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
         this.spectaclesGroupes = spectaclesGroupes;
     }
 
+
+    public void updateData(List<GroupeSpectacle> nouvellesDonnees) {
+        this.spectaclesGroupes = nouvellesDonnees;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public SpectacleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -76,7 +82,7 @@ public class SpectacleAdapter extends RecyclerView.Adapter<SpectacleAdapter.Spec
            // String imageUrl = groupe.getImagePrincipale();
             System.out.println("aaaaaaaaaa "+groupe.getImagePrincipale());
             if (groupe.getImagePrincipale() != null && !groupe.getImagePrincipale().isEmpty()) {
-                String imageUrl = "http://192.168.1.187:8081/api/images/" + groupe.getImagePrincipale();
+                String imageUrl = "http://192.168.1.16:8081/api/images/" + groupe.getImagePrincipale();
 
 //                String imageUrl = "http://localhost:8081/api/images/spectacles/" + spectacle.getImagePath();
                 /**    Picasso.get()
