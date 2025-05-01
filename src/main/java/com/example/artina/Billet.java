@@ -3,7 +3,7 @@ package com.example.artina;
 import com.google.gson.annotations.SerializedName;
 
 public class Billet {
-    @SerializedName("idBillet")
+    @SerializedName("id")
     private Long id;
 
     @SerializedName("categorie")
@@ -12,7 +12,7 @@ public class Billet {
     @SerializedName("prix")
     private String prix;
 
-    @SerializedName("idSpec")
+    @SerializedName("spectacle")
     private Spectacle spectacle;
 
     @SerializedName("vendu")
@@ -67,5 +67,17 @@ public class Billet {
 
     public void setNbrerestant(String nbrerestant) {
         this.nbrerestant = nbrerestant;
+    }
+
+    @Override
+    public String toString() {
+        return "Billet{" +
+                "id=" + id +
+                ", categorie='" + categorie + '\'' +
+                ", prix='" + prix + '\'' +
+                ", spectacle=" + spectacle+
+                ", vendu='" + vendu + '\'' +
+                ", nbrerestant='" + nbrerestant + '\'' +
+                '}';
     }
 }

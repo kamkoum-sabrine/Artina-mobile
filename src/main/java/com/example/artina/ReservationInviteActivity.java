@@ -1,6 +1,7 @@
 package com.example.artina;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,9 +60,63 @@ public class ReservationInviteActivity extends AppCompatActivity {
         }
 
         btnConfirmerReservation.setOnClickListener(v -> {
-            // ici tu peux collecter les données et appeler ton API de réservation
+            // Collecte des informations utilisateur
+            String nom = etNom.getText().toString();
+            String prenom = etPrenom.getText().toString();
+            String email = etEmail.getText().toString();
+            String nombreBillets = etNombreBillets.getText().toString();
+
+            if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || nombreBillets.isEmpty() || billetSelectionne == null) {
+                Toast.makeText(getApplicationContext(), "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+
+            Reservation reservation = new Reservation();
+            reservation.setSpectacle(new Spectacle(spectacleId)); // Ajoute l'ID du spectacle
+            //reservation.setClient(client);
+            reservation.setBillet(billetSelectionne);
+           // reservation.setDateReservation(LocalDate.now()); // Utilise la date actuelle pour la réservation
+            reservation.setQuantiteBillet(Integer.parseInt(nombreBillets));
+
+            // Appeler l'API pour créer la réservation
+            createReservation(reservation);
         });
     }
+
+    private void createReservation(Reservation reservation) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+        Call<ReservationResponse> call = apiService.createReservation(reservation);
+
+        call.enqueue(new Callback<ReservationResponse>() {
+            @Override
+            public void onResponse(Call<ReservationResponse> call, Response<ReservationResponse> response) {
+                if (response.isSuccessful()) {
+                    // La réservation a été créée avec succès
+                    ReservationResponse reservationResponse = response.body();
+                    Toast.makeText(getApplicationContext(), "Réservation réussie !", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), PaiementActivity.class);
+                    // Tu peux passer les infos si besoin avec intent.putExtra(...)
+                    startActivity(intent);
+                } else {
+                    // Gérer l'échec de la réponse de l'API
+                    System.out.println("Erreeeeyuuuuuu "+response.message());
+                    Toast.makeText(getApplicationContext(), "Erreur de réservation : " + response.message(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReservationResponse> call, Throwable t) {
+                // Gérer l'échec de la requête réseau
+                System.out.println("Erreeeeyuuuuuu "+t.getMessage());
+
+                Toast.makeText(getApplicationContext(), "Erreur réseau : " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void fetchBillets(Long idSpectacle) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
@@ -72,7 +127,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     billetsDisponibles = response.body();
                     setupBilletSpinner();
-                    System.out.println("Speecttaacleeee "+billetsDisponibles.get(0).getSpectacle().toString());
+                    System.out.println("Speecttaacleeee "+billetsDisponibles.get(0).toString());
                     afficherDetailsSpectacle(billetsDisponibles.get(0).getSpectacle());
                 } else {
                     Toast.makeText(getApplicationContext(), "Erreur lors du chargement des billets", Toast.LENGTH_SHORT).show();

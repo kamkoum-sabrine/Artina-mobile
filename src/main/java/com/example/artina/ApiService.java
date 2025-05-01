@@ -34,6 +34,7 @@ public interface ApiService {
     @POST("api/users")
     Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
 
-
+    @POST("api/reservations")
+    Call<ReservationResponse> createReservation(@Body Reservation reservation);
 
 }

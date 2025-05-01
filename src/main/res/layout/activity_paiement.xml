@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/artina_dark_bg">
+    android:background="@color/artina_dark_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,34 +11,18 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Logo Artina (optionnel) -->
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:src="@drawable/artina" />
-
-        <!-- Titre du Spectacle -->
         <TextView
-            android:id="@+id/tvTitreSpectacle"
-            style="@style/TextSpectacleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titre du spectacle"
+            android:text="Informations de paiement"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="32dp" />
 
-        <TextView
-            android:id="@+id/tvDateLieu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/artina_input_text"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Nom -->
+        <!-- Numéro carte -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/ArtinaInputLayout"
             android:layout_width="match_parent"
@@ -46,80 +30,72 @@
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nomReservation"
+                android:id="@+id/numeroCarte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Prénom -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/prenomReservation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Prénom"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Email -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailReservation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/artina_input_text"
-                android:textColorHint="@color/artina_input_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Catégorie billet -->
-        <Spinner
-            android:id="@+id/spinnerCategorieBillet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/artina_input_hint"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Nombre de billets -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/ArtinaInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nombreBillets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre de billets"
+                android:hint="Numéro de carte"
                 android:inputType="number"
                 android:textColor="@color/artina_input_text"
                 android:textColorHint="@color/artina_input_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Bouton Réserver -->
+        <!-- Nom sur la carte -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/ArtinaInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nomCarte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nom sur la carte"
+                android:textColor="@color/artina_input_text"
+                android:textColorHint="@color/artina_input_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Date d'expiration -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/ArtinaInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateExpiration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date d'expiration (MM/AA)"
+                android:inputType="text"
+                android:textColor="@color/artina_input_text"
+                android:textColorHint="@color/artina_input_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Code CVV -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/ArtinaInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/codeCVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Code CVV"
+                android:inputType="numberPassword"
+                android:textColor="@color/artina_input_text"
+                android:textColorHint="@color/artina_input_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Bouton Valider -->
         <Button
-            android:id="@+id/btnConfirmerReservation"
+            android:id="@+id/btnValiderPaiement"
             style="@style/ArtinaButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Réserver"
-            android:layout_marginBottom="16dp" />
+            android:text="Valider et télécharger billet" />
 
     </LinearLayout>
 </ScrollView>

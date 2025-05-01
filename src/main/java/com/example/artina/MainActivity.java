@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchSpectacles() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.16:8081/")
+                .baseUrl("http://192.168.1.187:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             if (spectacle.getImagePath() != null && !spectacle.getImagePathVertical().isEmpty()) {
-                String imageUrl = "http://192.168.1.16:8081/api/images/" + spectacle.getImagePathVertical();
+                String imageUrl = "http://192.168.1.187:8081/api/images/" + spectacle.getImagePathVertical();
                 Picasso.get()
                         .load(imageUrl)
                         .placeholder(R.drawable.artina)

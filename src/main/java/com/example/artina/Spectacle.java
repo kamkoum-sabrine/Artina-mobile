@@ -65,6 +65,9 @@ public class Spectacle implements Parcelable {
         this.heureDebut = heureDebut;
     }
 
+    public Spectacle(Long id) {
+        this.id = id;
+    }
 
     protected Spectacle(Parcel in) {
         id = in.readLong();

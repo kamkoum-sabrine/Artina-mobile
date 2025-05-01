@@ -97,7 +97,7 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         }
 
         if (imagePath != null && !imagePath.isEmpty()) {
-            String imageUrl = "http://192.168.1.16:8081/api/images/" + imagePath;
+            String imageUrl = "http://192.168.1.187:8081/api/images/" + imagePath;
             Picasso.get()
                     .load(imageUrl)
                     .placeholder(R.drawable.artina)
