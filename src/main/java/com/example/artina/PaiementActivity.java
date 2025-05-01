@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PaiementActivity extends AppCompatActivity {
 
@@ -45,6 +47,14 @@ public class PaiementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paiement);
+
+        // Récupère les données envoyées via l'Intent
+        String titreSpectacle = getIntent().getStringExtra("titre_spectacle");
+        String lieuSpectacle = getIntent().getStringExtra("lieu_spectacle");
+        System.out.println("PAge paiement titre  "+titreSpectacle);
+        System.out.println("PAge paiement lieu  "+lieuSpectacle);
+
+
         numeroCarte = findViewById(R.id.numeroCarte);
         nomCarte = findViewById(R.id.nomCarte);
         dateExpiration = findViewById(R.id.dateExpiration);
@@ -53,7 +63,7 @@ public class PaiementActivity extends AppCompatActivity {
 
         btnValiderPaiement.setOnClickListener(v -> {
             if (verifierChamps()) {
-                genererBilletPDF();
+                genererBilletPDF(titreSpectacle, lieuSpectacle);
             } else {
                 Toast.makeText(PaiementActivity.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
             }
@@ -67,7 +77,7 @@ public class PaiementActivity extends AppCompatActivity {
                 && !codeCVV.getText().toString().isEmpty();
     }
 
-    private void genererBilletPDF() {
+    private void genererBilletPDF(String titreSpectacle, String lieuSpectacle) {
         PdfDocument document = new PdfDocument();
         Paint paint = new Paint();
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
@@ -76,13 +86,15 @@ public class PaiementActivity extends AppCompatActivity {
         Canvas canvas = page.getCanvas();
         paint.setTextSize(16);
         paint.setColor(Color.BLACK);
+        System.out.println("dans la fonction "+titreSpectacle);
+        System.out.println("dans la fonction "+lieuSpectacle);
 
         // Texte statique du billet
-        canvas.drawText("🎫 Billet Spectacle", 80, 50, paint);
-        canvas.drawText("Nom: " + nomCarte.getText().toString(), 40, 100, paint);
-        canvas.drawText("Spectacle: Amazing Show", 40, 140, paint);
-        canvas.drawText("Date: 01/06/2025", 40, 180, paint);
-        canvas.drawText("Lieu: Artina Arena", 40, 220, paint);
+        canvas.drawText("🎫 Billet Artina", 80, 50, paint);
+        //canvas.drawText("Nom: " + nomCarte.getText().toString(), 40, 100, paint);
+        canvas.drawText("Spectacle: "+titreSpectacle , 40, 140, paint);
+        canvas.drawText(lieuSpectacle, 40, 220, paint);
+        canvas.drawText("Date de réservation: "+ LocalDate.now(), 40, 180, paint);
 
         // Générer QR code
         Bitmap qrCode = genererQRCode("https://example.com/billet/123456");

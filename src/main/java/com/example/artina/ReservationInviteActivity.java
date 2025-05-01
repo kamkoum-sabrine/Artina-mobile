@@ -46,7 +46,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
 
         tvTitreSpectacle = findViewById(R.id.tvTitreSpectacle);
         tvDateLieu = findViewById(R.id.tvDateLieu);
-       // tvDateSpectacle = findViewById(R.id.dateSpectacleReservation);
+        // tvDateSpectacle = findViewById(R.id.dateSpectacleReservation);
         etNom = findViewById(R.id.nomReservation);
         etPrenom = findViewById(R.id.prenomReservation);
         etEmail = findViewById(R.id.emailReservation);
@@ -71,17 +71,20 @@ public class ReservationInviteActivity extends AppCompatActivity {
                 return;
             }
 
-
-
             Reservation reservation = new Reservation();
             reservation.setSpectacle(new Spectacle(spectacleId)); // Ajoute l'ID du spectacle
-            //reservation.setClient(client);
             reservation.setBillet(billetSelectionne);
-           // reservation.setDateReservation(LocalDate.now()); // Utilise la date actuelle pour la réservation
             reservation.setQuantiteBillet(Integer.parseInt(nombreBillets));
 
             // Appeler l'API pour créer la réservation
             createReservation(reservation);
+
+            // Envoie les détails du spectacle à l'activité de paiement
+            Intent intent = new Intent(getApplicationContext(), PaiementActivity.class);
+            intent.putExtra("titre_spectacle", tvTitreSpectacle.getText());
+            intent.putExtra("lieu_spectacle", tvDateLieu.getText());
+
+            startActivity(intent);
         });
     }
 
@@ -97,12 +100,9 @@ public class ReservationInviteActivity extends AppCompatActivity {
                     // La réservation a été créée avec succès
                     ReservationResponse reservationResponse = response.body();
                     Toast.makeText(getApplicationContext(), "Réservation réussie !", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), PaiementActivity.class);
-                    // Tu peux passer les infos si besoin avec intent.putExtra(...)
-                    startActivity(intent);
+                    // Plus besoin de rediriger ici vers PaiementActivity
                 } else {
                     // Gérer l'échec de la réponse de l'API
-                    System.out.println("Erreeeeyuuuuuu "+response.message());
                     Toast.makeText(getApplicationContext(), "Erreur de réservation : " + response.message(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -110,11 +110,10 @@ public class ReservationInviteActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ReservationResponse> call, Throwable t) {
                 // Gérer l'échec de la requête réseau
-                System.out.println("Erreeeeyuuuuuu "+t.getMessage());
-
                 Toast.makeText(getApplicationContext(), "Erreur réseau : " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
     private void fetchBillets(Long idSpectacle) {
