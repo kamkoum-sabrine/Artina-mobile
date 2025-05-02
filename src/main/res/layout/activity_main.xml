@@ -287,12 +287,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+          <!--  <ImageView
                 android:id="@+id/icon_search"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_search"
-                app:tint="#FFFFFF" />
+                app:tint="#FFFFFF" />-->
         </LinearLayout>
 
         <!-- Compte -->
@@ -308,7 +308,7 @@
                 android:id="@+id/icon_reservation"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_reservation"
+                android:src="@drawable/ic_user"
                 app:tint="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>

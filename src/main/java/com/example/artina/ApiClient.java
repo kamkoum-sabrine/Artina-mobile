@@ -1,5 +1,9 @@
 package com.example.artina;
 
+import android.util.Log;
+
+import java.io.File;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,5 +23,28 @@ public class ApiClient {
                     .build();
         }
         return retrofit;
+    }
+
+    // Méthode pour effacer le cache
+    public static void clearCache() {
+        retrofit = null; // Force la recréation au prochain appel
+
+        // Optionnel : Effacer aussi le cache HTTP si vous en utilisez un
+        try {
+            File cacheDir = new File(MyApplication.getInstance().getCacheDir(), "http-cache");
+            deleteRecursive(cacheDir);
+        } catch (Exception e) {
+            Log.e("ApiClient", "Erreur nettoyage cache", e);
+        }
+    }
+
+    // Méthode utilitaire pour supprimer un répertoire récursivement
+    private static void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory()) {
+            for (File child : fileOrDirectory.listFiles()) {
+                deleteRecursive(child);
+            }
+        }
+        fileOrDirectory.delete();
     }
 }

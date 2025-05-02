@@ -20,10 +20,13 @@
             <Spinner
                 android:id="@+id/spinnerCriteria"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
 
             <EditText
                 android:id="@+id/etSearch"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -31,8 +34,10 @@
 
             <Button
                 android:id="@+id/btnRechercher"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#E50914"
                 android:text="Rechercher" />
         </LinearLayout>
 

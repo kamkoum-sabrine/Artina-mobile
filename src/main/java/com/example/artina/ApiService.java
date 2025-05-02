@@ -39,4 +39,7 @@ public interface ApiService {
     @POST("api/email/send-confirmation")
     Call<Void> sendConfirmationEmail(@Body EmailRequest request);
 
+    @GET("api/reservations/user/{userId}")
+    Call<List<Reservation>> getReservationsByUser(@Path("userId") Long userId);
+
 }
