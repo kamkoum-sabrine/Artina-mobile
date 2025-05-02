@@ -9,7 +9,6 @@ public class Reservation {
     private Client client;
     private Billet billet;
 
-    @SerializedName("QUANTITE_BILLET")
     private int quantiteBillet;
 
     public void setQuantiteBillet(int quantiteBillet) {
@@ -46,6 +45,16 @@ public class Reservation {
 
     public Billet getBillet() {
         return billet;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "spectacle=" + spectacle +
+                ", client=" + client +
+                ", billet=" + billet +
+                ", quantiteBillet=" + quantiteBillet +
+                '}';
     }
 }
 

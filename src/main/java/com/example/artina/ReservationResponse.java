@@ -12,6 +12,8 @@ public class ReservationResponse {
     @SerializedName("dateReservation")
     private LocalDate dateReservation;
 
+
+
     public ReservationResponse() {
     }
 

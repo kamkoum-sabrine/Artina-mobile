@@ -139,7 +139,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
     }
     private void createReservation(Reservation reservation) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-
+        System.out.println("reeeessseervaaationnn "+reservation.toString());
         Call<ReservationResponse> call = apiService.createReservation(reservation);
 
         call.enqueue(new Callback<ReservationResponse>() {
