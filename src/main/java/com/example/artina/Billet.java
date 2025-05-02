@@ -10,7 +10,7 @@ public class Billet {
     private String categorie;
 
     @SerializedName("prix")
-    private String prix;
+    private Double prix;
 
     @SerializedName("spectacle")
     private Spectacle spectacle;
@@ -29,7 +29,7 @@ public class Billet {
         return categorie;
     }
 
-    public String getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
@@ -49,7 +49,7 @@ public class Billet {
         this.categorie = categorie;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(Double prix) {
         this.prix = prix;
     }
 

@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,10 +38,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.UUID;
+import android.util.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 public class PaiementActivity extends AppCompatActivity {
 
     private EditText numeroCarte, nomCarte, dateExpiration, codeCVV;
+
+    private String userEmail;
+    private double totalAmount;
+    private String spectacleName;
     private Button btnValiderPaiement;
 
     @Override
@@ -51,9 +60,15 @@ public class PaiementActivity extends AppCompatActivity {
         // Récupère les données envoyées via l'Intent
         String titreSpectacle = getIntent().getStringExtra("titre_spectacle");
         String lieuSpectacle = getIntent().getStringExtra("lieu_spectacle");
+
         System.out.println("PAge paiement titre  "+titreSpectacle);
         System.out.println("PAge paiement lieu  "+lieuSpectacle);
 
+        // Récupérer les données
+        SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        userEmail = sharedPref.getString("user_email", "");
+        totalAmount = getIntent().getDoubleExtra("prix_total", 0);
+        spectacleName = getIntent().getStringExtra("titre_spectacle");
 
         numeroCarte = findViewById(R.id.numeroCarte);
         nomCarte = findViewById(R.id.nomCarte);
@@ -62,11 +77,12 @@ public class PaiementActivity extends AppCompatActivity {
         btnValiderPaiement = findViewById(R.id.btnValiderPaiement);
 
         btnValiderPaiement.setOnClickListener(v -> {
-            if (verifierChamps()) {
+            processPayment(titreSpectacle, lieuSpectacle);
+           /** if (verifierChamps()) {
                 genererBilletPDF(titreSpectacle, lieuSpectacle);
             } else {
                 Toast.makeText(PaiementActivity.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
-            }
+            }**/
         });
     }
 
@@ -75,6 +91,42 @@ public class PaiementActivity extends AppCompatActivity {
                 && !nomCarte.getText().toString().isEmpty()
                 && !dateExpiration.getText().toString().isEmpty()
                 && !codeCVV.getText().toString().isEmpty();
+    }
+    private void processPayment(String titreSpectacle, String lieuSpectacle) {
+        // 1. Simuler/effectuer le paiement
+        boolean paymentSuccess = true; // Remplacez par vraie logique de paiement
+
+        if (paymentSuccess) {
+            // 2. Envoyer l'email de confirmation
+            sendConfirmationEmail();
+            genererBilletPDF(titreSpectacle, lieuSpectacle);
+            // 3. Afficher confirmation à l'utilisateur
+            Toast.makeText(this, "Paiement réussi! Un email de confirmation a été envoyé", Toast.LENGTH_LONG).show();
+        }
+    }
+    private void sendConfirmationEmail() {
+        EmailRequest request = new EmailRequest();
+        request.setRecipient(userEmail);
+        request.setAmount(totalAmount);
+        request.setEventName(spectacleName);
+        request.setReference(UUID.randomUUID().toString().substring(0, 8));
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<Void> call = apiService.sendConfirmationEmail(request);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Email", "Échec envoi email: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Email", "Erreur réseau", t);
+            }
+        });
     }
 
     private void genererBilletPDF(String titreSpectacle, String lieuSpectacle) {

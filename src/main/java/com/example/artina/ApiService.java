@@ -36,4 +36,7 @@ public interface ApiService {
     @POST("api/reservations")
     Call<ReservationResponse> createReservation(@Body Reservation reservation);
 
+    @POST("api/email/send-confirmation")
+    Call<Void> sendConfirmationEmail(@Body EmailRequest request);
+
 }

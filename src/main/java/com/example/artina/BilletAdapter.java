@@ -1,5 +1,6 @@
 package com.example.artina;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,9 +71,10 @@ public class BilletAdapter extends RecyclerView.Adapter<BilletAdapter.ViewHolder
             nbreRestante = itemView.findViewById(R.id.placesDisponibles);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Billet billet, BilletAdapter.OnBilletClickListener listener) {
             categorie.setText(billet.getCategorie());
-            prix.setText(billet.getPrix());
+            prix.setText(billet.getPrix().toString());
             nbreRestante.setText(billet.getNbrerestant());
 
             itemView.setOnClickListener(v -> listener.onBilletClick(billet));

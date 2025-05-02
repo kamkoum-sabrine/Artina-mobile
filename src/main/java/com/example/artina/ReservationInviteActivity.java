@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -100,7 +101,14 @@ public class ReservationInviteActivity extends AppCompatActivity {
                 return;
             }
 
-            Reservation reservation = new Reservation();
+            // Calcul du prix total
+            int quantite = Integer.parseInt(nombreBillets);
+            double prixTotal = billetSelectionne.getPrix() * quantite;
+
+            // Afficher le popup de confirmation
+            showPaymentConfirmationDialog(quantite, prixTotal, spectacleId);
+
+            /**Reservation reservation = new Reservation();
             reservation.setSpectacle(new Spectacle(spectacleId)); // Ajoute l'ID du spectacle
             reservation.setBillet(billetSelectionne);
             reservation.setQuantiteBillet(Integer.parseInt(nombreBillets));
@@ -123,10 +131,48 @@ public class ReservationInviteActivity extends AppCompatActivity {
             intent.putExtra("titre_spectacle", tvTitreSpectacle.getText());
             intent.putExtra("lieu_spectacle", tvDateLieu.getText());
 
-            startActivity(intent);
+            startActivity(intent);**/
         });
     }
 
+    private void showPaymentConfirmationDialog(int quantite, double prixTotal, Long spectacleId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_payment_confirmation, null);
+        builder.setView(view);
+
+        TextView tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
+        Button btnConfirm = view.findViewById(R.id.btnConfirmPayment);
+        Button btnCancel = view.findViewById(R.id.btnCancelPayment);
+
+        tvTotalPrice.setText(String.format("Total: %.2f DT", prixTotal));
+
+        AlertDialog dialog = builder.create();
+
+        btnConfirm.setOnClickListener(v -> {
+            // Créer et envoyer la réservation
+            Reservation reservation = new Reservation();
+            reservation.setSpectacle(new Spectacle(spectacleId));
+            reservation.setBillet(billetSelectionne);
+            reservation.setQuantiteBillet(quantite);
+            SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+
+            if (sharedPref.getLong("user_id", -1) != -1) {
+                Client client = new Client();
+                client.setId(sharedPref.getLong("user_id", -1));
+                client.setNom(sharedPref.getString("user_nom", ""));
+                client.setPrenom(sharedPref.getString("user_prenom", ""));
+                client.setEmail(sharedPref.getString("user_email", ""));
+                reservation.setClient(client);
+            }
+
+            createReservation(reservation,prixTotal);
+            dialog.dismiss();
+        });
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
     private void setDisabledFieldStyle(EditText editText) {
         editText.setTextColor(ContextCompat.getColor(this, R.color.gray_500));
 
@@ -137,7 +183,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
             layout.setHintTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.gray_500)));
         }
     }
-    private void createReservation(Reservation reservation) {
+    private void createReservation(Reservation reservation, Double prixTotal) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         System.out.println("reeeessseervaaationnn "+reservation.toString());
         Call<ReservationResponse> call = apiService.createReservation(reservation);
@@ -150,6 +196,11 @@ public class ReservationInviteActivity extends AppCompatActivity {
                     ReservationResponse reservationResponse = response.body();
                     Toast.makeText(getApplicationContext(), "Réservation réussie !", Toast.LENGTH_SHORT).show();
                     // Plus besoin de rediriger ici vers PaiementActivity
+                    Intent intent = new Intent(getApplicationContext(), PaiementActivity.class);
+                    intent.putExtra("titre_spectacle", tvTitreSpectacle.getText());
+                    intent.putExtra("lieu_spectacle", tvDateLieu.getText());
+                    intent.putExtra("prix_total",prixTotal);
+                    startActivity(intent);
                 } else {
                     // Gérer l'échec de la réponse de l'API
                     Toast.makeText(getApplicationContext(), "Erreur de réservation : " + response.message(), Toast.LENGTH_LONG).show();
