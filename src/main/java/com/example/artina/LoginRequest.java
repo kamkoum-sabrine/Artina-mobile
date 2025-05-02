@@ -1,7 +1,10 @@
 package com.example.artina;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LoginRequest {
     private String email;
+    @SerializedName("motDePasse")
     private String motp;
 
     public LoginRequest(String email, String motp) {

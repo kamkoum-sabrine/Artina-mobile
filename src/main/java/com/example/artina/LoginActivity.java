@@ -1,6 +1,7 @@
 package com.example.artina;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,14 +39,14 @@ public class LoginActivity extends AppCompatActivity {
 
             if (validateInputs(email, password)) {
                 System.out.println("+++++++++++++++++++++");
-                //loginUser(email, password);
-                if (email.equals("kamkoumsabrine@gmail.com")&&(password.equals("password"))){
-                    navigateToHome();
-                }
-                else {
+                loginUser(email, password);
+             //   if (email.equals("kamkoumsabrine@gmail.com")&&(password.equals("password"))){
+                 //   navigateToHome();
+               // }
+                /*else {
                     showError("Email ou mot de passe incorrect");
 
-                }
+                }*/
             }
         });
     }
@@ -55,19 +56,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
+        System.out.println("Mot de passe "+password);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<LoginResponse> call = apiService.loginUser(new LoginRequest(email, password));
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                System.out.println("response "+response);
                 if (response.isSuccessful() && response.body() != null) {
-                    // Login réussi
-                    Client client = response.body().getClient();
-                   // navigateToHome(client);
+                    LoginResponse loginResponse = response.body();
+                    // Stockez les informations de l'utilisateur si nécessaire
+                    saveUserData(loginResponse);
+                    navigateToHome();
                 } else {
-                    // Erreur de login
                     showError("Email ou mot de passe incorrect");
                 }
             }
@@ -79,21 +80,43 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void saveUserData(LoginResponse user) {
+        // Exemple avec SharedPreferences
+        SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong("user_id", user.getId());
+        editor.putString("user_email", user.getEmail());
+        editor.putString("user_name", user.getPrenom() + " " + user.getNom());
+        editor.apply();
+    }
+
+
    /* private void navigateToHome(Client client) {
         Intent intent = new Intent(this, DetailSpectacleActivity.class);
         intent.putExtra("CLIENT_ID", client.getId());
         startActivity(intent);
         finish();
     }*/
+   private void navigateToHome() {
+       Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
+       Intent intent = new Intent(this, ReservationInviteActivity.class);
+       intent.putExtra("spectacle_id", spectacleId);
 
-    private void navigateToHome() {
+       // Ajoutez les infos utilisateur si nécessaire
+       SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+       intent.putExtra("user_id", sharedPref.getLong("user_id", -1));
+
+       startActivity(intent);
+       finish();
+   }
+  /*  private void navigateToHome() {
         Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
         System.out.println("pppsstttt "+spectacleId);
         Intent intent = new Intent(this, ReservationInviteActivity.class);
         intent.putExtra("spectacle_id", spectacleId);
         startActivity(intent);
         finish();
-        }
+        }*/
 
     private void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
