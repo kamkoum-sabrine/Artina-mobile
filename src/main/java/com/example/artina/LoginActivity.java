@@ -81,12 +81,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveUserData(LoginResponse user) {
-        // Exemple avec SharedPreferences
         SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong("user_id", user.getId());
+        editor.putString("user_nom", user.getNom());
+        editor.putString("user_prenom", user.getPrenom());
         editor.putString("user_email", user.getEmail());
-        editor.putString("user_name", user.getPrenom() + " " + user.getNom());
+        editor.putString("user_tel", user.getTel()); // si vous avez besoin du téléphone
         editor.apply();
     }
 

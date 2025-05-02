@@ -90,4 +90,9 @@
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.2</item>
     </style>
+
+    <style name="DisabledEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/gray</item>
+        <item name="boxStrokeColor">@color/gray</item>
+    </style>
 </resources>

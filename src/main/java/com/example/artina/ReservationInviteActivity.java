@@ -2,6 +2,8 @@ package com.example.artina;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +16,12 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +59,30 @@ public class ReservationInviteActivity extends AppCompatActivity {
         spinnerCategorieBillet = findViewById(R.id.spinnerCategorieBillet);
         btnConfirmerReservation = findViewById(R.id.btnConfirmerReservation);
 
+        // Récupérer les données utilisateur depuis SharedPreferences
+        SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        String userNom = sharedPref.getString("user_nom", "");
+        String userPrenom = sharedPref.getString("user_prenom", "");
+        String userEmail = sharedPref.getString("user_email", "");
+
+        // Vérifier si l'utilisateur est connecté
+        if (sharedPref.getLong("user_id", -1) != -1) {
+            // Utilisateur connecté - remplir les champs
+            etNom.setText(sharedPref.getString("user_nom", ""));
+            etPrenom.setText(sharedPref.getString("user_prenom", ""));
+            etEmail.setText(sharedPref.getString("user_email", ""));
+
+            // Optionnel : rendre les champs non modifiables
+            etNom.setEnabled(false);
+            etPrenom.setEnabled(false);
+            etEmail.setEnabled(false);
+
+            // Optionnel : changer le style visuel
+            setDisabledFieldStyle(etNom);
+            setDisabledFieldStyle(etPrenom);
+            setDisabledFieldStyle(etEmail);
+        }
+
         Long idSpectacle = getIntent().getLongExtra("spectacle_id", -1);
         if (idSpectacle != -1) {
             fetchBillets(idSpectacle);
@@ -75,6 +104,16 @@ public class ReservationInviteActivity extends AppCompatActivity {
             reservation.setSpectacle(new Spectacle(spectacleId)); // Ajoute l'ID du spectacle
             reservation.setBillet(billetSelectionne);
             reservation.setQuantiteBillet(Integer.parseInt(nombreBillets));
+            if (sharedPref.getLong("user_id", -1) != -1) {
+                Client client = new Client();
+                client.setId(sharedPref.getLong("user_id", -1));
+                client.setNom(sharedPref.getString("user_nom", ""));
+                client.setPrenom(sharedPref.getString("user_prenom", ""));
+                client.setEmail(sharedPref.getString("user_email", ""));
+                reservation.setClient(client);
+            } else {
+                reservation.setClient(null);
+            }
 
             // Appeler l'API pour créer la réservation
             createReservation(reservation);
@@ -88,6 +127,16 @@ public class ReservationInviteActivity extends AppCompatActivity {
         });
     }
 
+    private void setDisabledFieldStyle(EditText editText) {
+        editText.setTextColor(ContextCompat.getColor(this, R.color.gray_500));
+
+        // Vérifiez d'abord si le parent est un TextInputLayout
+        if (editText.getParent() instanceof TextInputLayout) {
+            TextInputLayout layout = (TextInputLayout) editText.getParent();
+            layout.setBoxStrokeColor(ContextCompat.getColor(this, R.color.gray_300));
+            layout.setHintTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.gray_500)));
+        }
+    }
     private void createReservation(Reservation reservation) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
