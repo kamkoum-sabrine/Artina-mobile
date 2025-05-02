@@ -100,15 +100,27 @@ public class LoginActivity extends AppCompatActivity {
     }*/
    private void navigateToHome() {
        Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
-       Intent intent = new Intent(this, ReservationInviteActivity.class);
-       intent.putExtra("spectacle_id", spectacleId);
+       System.out.println("Spectacle ID "+spectacleId);
+       if (spectacleId==-1){
+           Intent intent = new Intent(this, MainActivity.class);
+           intent.putExtra("spectacle_id", spectacleId);
+           SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+           intent.putExtra("user_id", sharedPref.getLong("user_id", -1));
 
-       // Ajoutez les infos utilisateur si nécessaire
-       SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
-       intent.putExtra("user_id", sharedPref.getLong("user_id", -1));
+           startActivity(intent);
+           finish();
+       }
+       else {
+           Intent intent = new Intent(this, ReservationInviteActivity.class);
+           intent.putExtra("spectacle_id", spectacleId);
+           SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+           intent.putExtra("user_id", sharedPref.getLong("user_id", -1));
 
-       startActivity(intent);
-       finish();
+           startActivity(intent);
+           finish();
+       }
+
+
    }
   /*  private void navigateToHome() {
         Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);

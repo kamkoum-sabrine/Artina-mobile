@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -161,35 +162,46 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_reservation, null);
         dialog.setContentView(dialogView);
 
-        // 3. Empêchez le fond blanc parasite
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        // Configuration des boutons
-        Button btnSeConnecter = dialog.findViewById(R.id.btnSeConnecter);
-        Button btnSInscrire = dialog.findViewById(R.id.btnSInscrire);
-        Button btnContinuerInvite = dialog.findViewById(R.id.btnContinuerInvite);
+        SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        if (sharedPref.getLong("user_id", -1)==-1){
 
-        btnSeConnecter.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
-            startActivity(loginIntent);
-            dialog.dismiss();
-        });
+            // 3. Empêchez le fond blanc parasite
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            // Configuration des boutons
+            Button btnSeConnecter = dialog.findViewById(R.id.btnSeConnecter);
+            Button btnSInscrire = dialog.findViewById(R.id.btnSInscrire);
+            Button btnContinuerInvite = dialog.findViewById(R.id.btnContinuerInvite);
 
-        btnSInscrire.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(this, RegisterActivity.class);
-            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
-            startActivity(loginIntent);
-            dialog.dismiss();
-        });
+            btnSeConnecter.setOnClickListener(v -> {
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                startActivity(loginIntent);
+                dialog.dismiss();
+            });
 
-        btnContinuerInvite.setOnClickListener(v -> {
+            btnSInscrire.setOnClickListener(v -> {
+                Intent loginIntent = new Intent(this, RegisterActivity.class);
+                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                startActivity(loginIntent);
+                dialog.dismiss();
+            });
+
+            btnContinuerInvite.setOnClickListener(v -> {
+                Intent loginIntent = new Intent(this, ReservationInviteActivity.class);
+                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                startActivity(loginIntent);
+                dialog.dismiss();
+            });
+
+            dialog.show();
+
+        }
+        else {
             Intent loginIntent = new Intent(this, ReservationInviteActivity.class);
             loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
             startActivity(loginIntent);
             dialog.dismiss();
-        });
-
-        dialog.show();
+        }
     }
 
     private void continuerEnInvite() {
