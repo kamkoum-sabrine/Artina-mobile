@@ -75,7 +75,8 @@ public class ReservationsActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(List<Reservation> reservations) {
-        adapter = new ReservationAdapter(reservations);
+        adapter = new ReservationAdapter(this, reservations);
         recyclerView.setAdapter(adapter);
     }
+
 }

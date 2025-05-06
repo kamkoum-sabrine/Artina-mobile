@@ -149,7 +149,7 @@ public class PaiementActivity extends AppCompatActivity {
         canvas.drawText("Date de réservation: "+ LocalDate.now(), 40, 180, paint);
 
         // Générer QR code
-        Bitmap qrCode = genererQRCode("https://example.com/billet/123456");
+        Bitmap qrCode = genererQRCode("https://artina.com/billet/123456");
         if (qrCode != null) {
             canvas.drawBitmap(qrCode, 75, 260, paint);  // Positionner le QR code
         }

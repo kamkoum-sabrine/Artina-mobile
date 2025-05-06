@@ -28,4 +28,13 @@
         android:layout_height="wrap_content"
         android:textColor="@color/artina_primary"
         android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnTelechargerBillet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/artina_primary"
+        android:text="Télécharger Billet"
+        android:layout_marginTop="8dp"/>
+
 </LinearLayout>
