@@ -83,4 +83,16 @@ public class Lieu implements Parcelable {
         dest.writeString(ville);
         dest.writeString(url);
     }
+
+    @Override
+    public String toString() {
+        return "Lieu{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", capacite=" + capacite +
+                ", ville='" + ville + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

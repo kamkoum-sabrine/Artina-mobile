@@ -40,18 +40,11 @@ public class LoginActivity extends AppCompatActivity {
             if (validateInputs(email, password)) {
                 System.out.println("+++++++++++++++++++++");
                 loginUser(email, password);
-             //   if (email.equals("kamkoumsabrine@gmail.com")&&(password.equals("password"))){
-                 //   navigateToHome();
-               // }
-                /*else {
-                    showError("Email ou mot de passe incorrect");
 
-                }*/
             }
         });
     }
     private boolean validateInputs(String email, String password) {
-        // Validation simple
         return !email.isEmpty() && !password.isEmpty();
     }
 
@@ -65,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
-                    // Stockez les informations de l'utilisateur si nécessaire
                     saveUserData(loginResponse);
                     navigateToHome();
                 } else {
@@ -87,17 +79,12 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user_nom", user.getNom());
         editor.putString("user_prenom", user.getPrenom());
         editor.putString("user_email", user.getEmail());
-        editor.putString("user_tel", user.getTel()); // si vous avez besoin du téléphone
+        editor.putString("user_tel", user.getTel());
         editor.apply();
     }
 
 
-   /* private void navigateToHome(Client client) {
-        Intent intent = new Intent(this, DetailSpectacleActivity.class);
-        intent.putExtra("CLIENT_ID", client.getId());
-        startActivity(intent);
-        finish();
-    }*/
+
    private void navigateToHome() {
        Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
        System.out.println("Spectacle ID "+spectacleId);
@@ -122,14 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
    }
-  /*  private void navigateToHome() {
-        Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
-        System.out.println("pppsstttt "+spectacleId);
-        Intent intent = new Intent(this, ReservationInviteActivity.class);
-        intent.putExtra("spectacle_id", spectacleId);
-        startActivity(intent);
-        finish();
-        }*/
+
 
     private void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

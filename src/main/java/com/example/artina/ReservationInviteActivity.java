@@ -49,6 +49,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reservation_invite);
         Long spectacleId = getIntent().getLongExtra("spectacle_id", -1);
+        String lieu = getIntent().getStringExtra("lieu");
 
         tvTitreSpectacle = findViewById(R.id.tvTitreSpectacle);
         tvDateLieu = findViewById(R.id.tvDateLieu);
@@ -86,7 +87,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
 
         Long idSpectacle = getIntent().getLongExtra("spectacle_id", -1);
         if (idSpectacle != -1) {
-            fetchBillets(idSpectacle);
+            fetchBillets(idSpectacle,lieu);
         }
 
         btnConfirmerReservation.setOnClickListener(v -> {
@@ -199,11 +200,12 @@ public class ReservationInviteActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), PaiementActivity.class);
                     intent.putExtra("titre_spectacle", tvTitreSpectacle.getText());
                     intent.putExtra("lieu_spectacle", tvDateLieu.getText());
+                    System.out.println("tvDateeeeeeee "+tvDateLieu.getText());
                     intent.putExtra("prix_total",prixTotal);
                     startActivity(intent);
                 } else {
                     // Gérer l'échec de la réponse de l'API
-                    Toast.makeText(getApplicationContext(), "Erreur de réservation : " + response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Nombre de billets non disponible " + response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -216,7 +218,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
 
     }
 
-    private void fetchBillets(Long idSpectacle) {
+    private void fetchBillets(Long idSpectacle, String lieu) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
         Call<List<Billet>> call = apiService.getBuilletsBySpectacleId(idSpectacle);
@@ -227,7 +229,7 @@ public class ReservationInviteActivity extends AppCompatActivity {
                     billetsDisponibles = response.body();
                     setupBilletSpinner();
                     System.out.println("Speecttaacleeee "+billetsDisponibles.get(0).toString());
-                    afficherDetailsSpectacle(billetsDisponibles.get(0).getSpectacle());
+                    afficherDetailsSpectacle(billetsDisponibles.get(0).getSpectacle(),lieu);
                 } else {
                     Toast.makeText(getApplicationContext(), "Erreur lors du chargement des billets", Toast.LENGTH_SHORT).show();
                 }
@@ -260,8 +262,9 @@ public class ReservationInviteActivity extends AppCompatActivity {
         });
     }
 
-    private void afficherDetailsSpectacle(Spectacle spectacle) {
+    private void afficherDetailsSpectacle(Spectacle spectacle, String lieu) {
         tvTitreSpectacle.setText(spectacle.getTitre());
-        tvDateLieu.setText("Le " + spectacle.getDate() + " à " + spectacle.getIdLieu().getNom());
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa "+spectacle.toString());
+        tvDateLieu.setText("Le " + spectacle.getDate() + " à " + lieu);
     }
 }

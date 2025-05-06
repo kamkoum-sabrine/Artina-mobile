@@ -75,9 +75,9 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         String ville = intent.getStringExtra("VILLE");
         String adresse = intent.getStringExtra("ADRESSE");
 
-        Double hdebut = getIntent().getDoubleExtra("HEURE_DEBUT", 0.0); // 0.0 est la valeur par défaut
+        Double hdebut = getIntent().getDoubleExtra("HEURE_DEBUT", 0.0);
         String dates = intent.getStringExtra("DATES");
-        Long idSpec = getIntent().getLongExtra("ID", 0); // 0.0 est la valeur par défaut
+        Long idSpec = getIntent().getLongExtra("ID", 0);
 
         titreText.setText(titre);
         lieuNom.setText(lieu);
@@ -98,24 +98,24 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         }
 
         if (imagePath != null && !imagePath.isEmpty()) {
-            String imageUrl = "http://192.168.1.16:8081/api/images/" + imagePath;
+            String imageUrl = "http://192.168.1.187:8081/api/images/" + imagePath;
             Picasso.get()
                     .load(imageUrl)
                     .placeholder(R.drawable.artina)
                     .error(R.drawable.artina)
                     .into(imageView);
         } else {
-            imageView.setImageResource(R.drawable.artina); // fallback local
+            imageView.setImageResource(R.drawable.artina);
         }
         recyclerView.setAdapter(adapter);
 
-        // Chargement des données depuis l'API
+
         System.out.println("id  "+idSpec);
         loadBilletsFromApi(idSpec);
         btnReserver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showReservationDialog(idSpec);
+                showReservationDialog(idSpec,lieu);
             }
         });
     }
@@ -128,16 +128,13 @@ public class DetailSpectacleActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Billet>> call, Response<List<Billet>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Mettez à jour les données de l'adaptateur
                     adapter = new BilletAdapter(DetailSpectacleActivity.this,
                             response.body(),
                             billet -> {
-                                // Gestion du clic
+
                             });
                     recyclerView.setAdapter(adapter);
 
-                    // Ou alternative plus efficace :
-                    // adapter.updateData(response.body());
                 } else {
                     Toast.makeText(DetailSpectacleActivity.this,
                             "Erreur de chargement des billets",
@@ -154,41 +151,41 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         });
     }
 
-    private void showReservationDialog(Long idSpec) {
-        // 1. Utilisez le contexte de l'activité (THIS est crucial)
+    private void showReservationDialog(Long idSpec,String lieuNom) {
         BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetStyle);
 
-        // 2. Inflatez le layout SANS le rattacher à une racine
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_reservation, null);
         dialog.setContentView(dialogView);
 
         SharedPreferences sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE);
         if (sharedPref.getLong("user_id", -1)==-1){
 
-            // 3. Empêchez le fond blanc parasite
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            // Configuration des boutons
             Button btnSeConnecter = dialog.findViewById(R.id.btnSeConnecter);
             Button btnSInscrire = dialog.findViewById(R.id.btnSInscrire);
             Button btnContinuerInvite = dialog.findViewById(R.id.btnContinuerInvite);
 
             btnSeConnecter.setOnClickListener(v -> {
                 Intent loginIntent = new Intent(this, LoginActivity.class);
-                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                loginIntent.putExtra("spectacle_id", idSpec);
+                loginIntent.putExtra("lieu",lieuNom);
                 startActivity(loginIntent);
                 dialog.dismiss();
             });
 
             btnSInscrire.setOnClickListener(v -> {
                 Intent loginIntent = new Intent(this, RegisterActivity.class);
-                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                loginIntent.putExtra("spectacle_id", idSpec);
+                loginIntent.putExtra("lieu",lieuNom);
+
                 startActivity(loginIntent);
                 dialog.dismiss();
             });
 
             btnContinuerInvite.setOnClickListener(v -> {
                 Intent loginIntent = new Intent(this, ReservationInviteActivity.class);
-                loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+                loginIntent.putExtra("spectacle_id", idSpec);
+                loginIntent.putExtra("lieu",lieuNom);
                 startActivity(loginIntent);
                 dialog.dismiss();
             });
@@ -198,14 +195,15 @@ public class DetailSpectacleActivity extends AppCompatActivity {
         }
         else {
             Intent loginIntent = new Intent(this, ReservationInviteActivity.class);
-            loginIntent.putExtra("spectacle_id", idSpec); // Passer l'ID de spectacle
+            loginIntent.putExtra("spectacle_id", idSpec);
+            Intent lieu = loginIntent.putExtra("lieu", lieuNom);
+
             startActivity(loginIntent);
             dialog.dismiss();
         }
     }
 
     private void continuerEnInvite() {
-        // Ici, tu peux lancer l'activité de réservation directement
         Intent intent = new Intent(getApplicationContext(), ReservationInviteActivity.class);
         startActivity(intent);
     }

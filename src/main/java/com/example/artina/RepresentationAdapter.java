@@ -40,9 +40,7 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
     @Override
     public void onBindViewHolder(@NonNull RepresentationViewHolder holder, int position) {
         Representation representation = representations.get(position);
-       // holder.bind(representation);
        System.out.println("Representation "+representation.toString());
-        // Mettre à jour les vues avec les informations des représentations
         holder.dateHeure.setText(representation.getDates());
         holder.lieu.setText(representation.getLieu() != null ? representation.getLieu().getNom() : "Inconnu");
         if (representation.getLieu() != null && representation.getLieu().getUrl() != null) {
@@ -50,16 +48,6 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(representation.getLieu().getUrl()));
                 v.getContext().startActivity(intent);
             });
-           /* holder.btnVoirLocalisation.setOnClickListener(v -> {
-                String lieu = holder.lieu.getText().toString();
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(lieu));
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                v.getContext().startActivity(mapIntent);
-            });*/
-
-            // Ajouter soulignement pour montrer que c'est cliquable
-           // holder.lieu.setPaintFlags(holder.lieu.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else {
             holder.lieu.setOnClickListener(null); // Pas cliquable si pas d'URL
         }
@@ -67,9 +55,7 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
         holder.btnDetailsReserver.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailSpectacleActivity.class);
 
-            // Envoyer les infos dont tu as besoin
             intent.putExtra("TITRE", representation.getTitre());
-         //   intent.putExtra("DESCRIPTION", representation.getSpectacle().getDescription());
             intent.putExtra("IMAGE_PATH", representation.getImagePath());
             intent.putExtra("LIEU", representation.getLieu() != null ? representation.getLieu().getNom() : "Lieu inconnu");
             intent.putExtra("VILLE", representation.getLieu() != null ? representation.getLieu().getVille() : "Ville inconnue");
@@ -86,7 +72,6 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
     @Override
     public int getItemCount() {
         return (representations != null) ? representations.size() : 0;
-        //return representations.size();
     }
 
     class RepresentationViewHolder extends RecyclerView.ViewHolder {
@@ -95,32 +80,21 @@ public class RepresentationAdapter extends  RecyclerView.Adapter<RepresentationA
 
         Button btnDetailsReserver;
 
-        // ImageView btnVoirLocalisation;
 
         public RepresentationViewHolder(@NonNull View itemView) {
             super(itemView);
             dateHeure = itemView.findViewById(R.id.dateHeure);
             lieu = itemView.findViewById(R.id.lieuRepresentation);
             btnDetailsReserver = itemView.findViewById(R.id.btnDetailsReserver);
-            // btnVoirLocalisation = itemView.findViewById(R.id.btnVoirLocalisation);
-           // image = itemView.findViewById(R.id.imageRepresentation);
         }
 
         public void bind(Representation representation) {
-            // Formater la date et l'heure
             String dateFormatee = formatDate(representation.getDates());
             String heureFormatee = formatHeure(representation.gethDebut());
             dateHeure.setText(dateFormatee + " • " + heureFormatee);
             System.out.println("reeeeppp "+representation.getLieu().getNom());
             lieu.setText(representation.getLieu().getNom());
 
-            // Charger l'image si disponible
-            //System.out.println("Imaageee "+representation.getSpectacle().getImagePath());
-           /** if (representation.getImagePath() != null) {
-                Picasso.get()
-                        .load("http://192.168.1.18:8081/api/images/" + representation.getImagePath())
-                        .into(image);
-            }**/
         }
 
         private String formatDate(String dateStr) {

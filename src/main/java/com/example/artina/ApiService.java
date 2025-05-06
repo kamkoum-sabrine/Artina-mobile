@@ -16,7 +16,6 @@ public interface ApiService {
     @GET("api/spectacles/{id}")
     Call<Spectacle> getSpectacleById(@Path("id") Long id);
 
-    // Ajoutez d'autres endpoints au besoin
 
     @GET("api/billets/by-spectacle/{spectacleId}")
     Call<List<Billet>> getBuilletsBySpectacleId(@Path("spectacleId") Long id);
